@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyText
+  description: MyText
+  type: MyText
+  priority: MyText
+  status: MyText
+  votes: 1
+  creator_id: 1
+  assignee_id: 1
+  date_creation: 2019-03-21
+
+two:
+  title: MyText
+  description: MyText
+  type: MyText
+  priority: MyText
+  status: MyText
+  votes: 1
+  creator_id: 1
+  assignee_id: 1
+  date_creation: 2019-03-21
