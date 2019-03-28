@@ -32,8 +32,7 @@
   </div>
 
   <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field  :status, id: :issue_status %>
+    <%= form.hidden_field :status, id: :issue_status, value: "New" %>
   </div>
 
   <div class="field">
