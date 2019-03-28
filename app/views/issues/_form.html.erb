@@ -23,12 +23,12 @@
 
   <div class="field">
     <%= form.label :type_issue %>
-    <%= form.text_field :type_issue, id: :issue_type %>
+    <%= form.select :type_issue, ['bug', 'enhancement','proposal','task']%>
   </div>
 
   <div class="field">
     <%= form.label :priority %>
-    <%= form.text_field  :priority, id: :issue_priority %>
+    <%= form.select :priority, ['trivial', 'minor','major','critical','blocker']%>
   </div>
 
   <div class="field">
@@ -50,6 +50,9 @@
     <%= form.label :assignee_id %>
     <%= form.number_field :assignee_id, id: :issue_assignee_id %>
   </div>
+  
+ 
+
 
   <div class="actions">
     <%= form.submit %>
