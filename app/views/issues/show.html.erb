@@ -37,7 +37,11 @@
 
 <p>
   <strong>Assignee:</strong>
-  <%= @issue.assignee_id %>
+  <% if @issue.assignee_id != nil %>
+    <%= User.all.find(@issue.assignee_id).name %>
+  <% else %>
+    <%= "---" %>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_issue_path(@issue) %> |
