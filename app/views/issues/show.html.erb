@@ -30,27 +30,36 @@
         <h2>Comments:</h2>
       </div>
     </div>
-    <div class="sidebar_info">
-      <p>
+    <div class="sidebar">
+      <div class="issue_toolbar">
+        <%= form_with(model: @issue, local: true) do |form| %>
+          <%= form.label :status %>
+          <%= form.select :status, ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed']%>
+          <%= form.submit %>
+        <% end %>
+      </div>
+      <div class="sidebar_info">
+        <p>
         <strong>Assignee:</strong>
         <%= @issue.assignee_id %>
-      </p>
-      <p>
-        <strong>Type:</strong>
-        <%= @issue.type_issue %>
-      </p>
-      <p>
-        <strong>Priority:</strong>
-        <%= @issue.priority %>
-      </p>
-      <p>
-        <strong>Status:</strong>
-        <%= @issue.status %>
-      </p>
-      <p>
-        <strong>Votes:</strong>
-        <%= @issue.votes %>
-      </p>
+        </p>
+        <p>
+          <strong>Type:</strong>
+          <%= @issue.type_issue %>
+        </p>
+        <p>
+          <strong>Priority:</strong>
+          <%= @issue.priority %>
+        </p>
+        <p>
+          <strong>Status:</strong>
+          <%= @issue.status %>
+        </p>
+        <p>
+          <strong>Votes:</strong>
+          <%= @issue.votes %>
+        </p>  
+      </div>
     </div>
   </div>
 </div>
