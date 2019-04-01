@@ -47,7 +47,7 @@
 
   <div class="field">
     <%= form.label :assignee_id %>
-    <%= form.number_field :assignee_id, id: :issue_assignee_id %>
+    <%= form.select(:assignee_id, options_from_collection_for_select(User.all, :id, :name), prompt: "Select user") %>
   </div>
   
  
