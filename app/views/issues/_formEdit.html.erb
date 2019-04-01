@@ -32,10 +32,6 @@
   </div>
 
   <div class="field">
-    <%= form.hidden_field :status, id: :issue_status, value: "new" %>
-  </div>
-
-  <div class="field">
     <%= form.label :votes %>
     <%= form.number_field :votes, id: :issue_votes %>
   </div>
@@ -47,7 +43,7 @@
 
   <div class="field">
     <%= form.label :assignee_id %>
-    <%= form.select(:assignee_id, options_from_collection_for_select(User.all, :id, :name), prompt: "Select user") %>
+    <%= form.number_field :assignee_id, id: :issue_assignee_id %>
   </div>
   
  
