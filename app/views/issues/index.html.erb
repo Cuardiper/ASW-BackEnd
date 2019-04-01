@@ -2,6 +2,10 @@
 
 <h1>Issues</h1>
 
+<p>Filter by: &nbsp <%= link_to 'All', issues_path %> &nbsp <%= link_to 'Unresolved', issues_path(:status => ['new','open']) %> &nbsp My issues  &nbsp Watching </p>
+<br>
+
+
 <table>
   <thead>
     <tr>
@@ -21,9 +25,9 @@
     <% @issues.each do |issue| %>
       <tr>
         <td><%= issue.title %></td>
-        <td><%= issue.type_issue %></td>
-        <td><%= issue.priority %></td>
-        <td><%= issue.status %></td>
+        <td><%= link_to issue.type_issue, issues_path(:type_issue => [issue.type_issue]) %></td>
+        <td><%= link_to issue.priority, issues_path(:priority => [issue.priority]) %></td>
+        <td><%= link_to issue.status, issues_path(:status => [issue.status]) %></td>
         <td><%= issue.votes %></td>
         <% if issue.assignee_id != nil %>
           <td><%= User.all.find(issue.assignee_id).name %></td>

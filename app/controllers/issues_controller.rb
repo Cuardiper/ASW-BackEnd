@@ -5,6 +5,9 @@ class IssuesController < ApplicationController
   # GET /issues.json
   def index
     @issues = Issue.all
+    @issues = @issues.status(params[:status]) if params[:status].present?
+    @issues = @issues.priority(params[:priority]) if params[:priority].present?
+    @issues = @issues.type_issue(params[:type_issue]) if params[:type_issue].present?
   end
 
   # GET /issues/1
