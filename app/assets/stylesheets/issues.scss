@@ -1,3 +1,22 @@
 // Place all the styles related to the Issues controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.sidebar{
+  position:absolute;
+  top:10px;
+  right: 10px;
+}
+
+.sidebar_info{
+  background-color: lightgrey;
+}
+
+.avatar_img{
+  width: 25px;
+  height: 25px;
+}
+
+.issue_toolbar{
+  
+}

@@ -1,44 +1,68 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @issue.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @issue.description %>
-</p>
-
-<p>
-  <strong>Type:</strong>
-  <%= @issue.type_issue %>
-</p>
-
-<p>
-  <strong>Priority:</strong>
-  <%= @issue.priority %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @issue.status %>
-</p>
-
-<p>
-  <strong>Votes:</strong>
-  <%= @issue.votes %>
-</p>
-
-<p>
-  <strong>Creator:</strong>
-  <%= @issue.creator_id %>
-</p>
-
-<p>
-  <strong>Assignee:</strong>
-  <%= @issue.assignee_id %>
-</p>
+<div id="content">
+  <header>
+    <h1>
+      <span> <%= @issue.title %> </span>
+    </h1>
+  </header>
+  <div>
+    <div>
+      <span> Issue #<%= @issue.id %> </span>
+      <span><%= @issue.status %></span>  
+    </div>
+    <div class="item">
+      <div id="issue_main_content">
+        <div class="issue_author">
+          <a href="/users/<%= @issue.creator_id %>">
+            <img class="avatar_img" src="https://res-5.cloudinary.com/hireclub/image/upload/default_avatar.png">
+            <span>User <%= @issue.creator_id %></span>
+          </a>
+          created an issue
+          <time>x days ago</time>
+        </div>
+        <div class="issue_description">
+          <p><%= @issue.description %></p>
+        </div>
+        <div class="attachments"></div>
+      </div>
+      <div id="issue_comments_container">
+        <h2>Comments:</h2>
+      </div>
+    </div>
+    <div class="sidebar">
+      <div class="issue_toolbar">
+        <%= form_with(model: @issue, local: true) do |form| %>
+          <%= form.label :status %>
+          <%= form.select :status, ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed']%>
+          <%= form.submit %>
+        <% end %>
+      </div>
+      <div class="sidebar_info">
+        <p>
+        <strong>Assignee:</strong>
+        <%= @issue.assignee_id %>
+        </p>
+        <p>
+          <strong>Type:</strong>
+          <%= @issue.type_issue %>
+        </p>
+        <p>
+          <strong>Priority:</strong>
+          <%= @issue.priority %>
+        </p>
+        <p>
+          <strong>Status:</strong>
+          <%= @issue.status %>
+        </p>
+        <p>
+          <strong>Votes:</strong>
+          <%= @issue.votes %>
+        </p>  
+      </div>
+    </div>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_issue_path(@issue) %> |
 <%= link_to 'Back', issues_path %>
