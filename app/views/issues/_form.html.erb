@@ -39,10 +39,9 @@
     <%= form.label :votes %>
     <%= form.number_field :votes, id: :issue_votes %>
   </div>
-
+  
   <div class="field">
-    <%= form.label :creator_id %>
-    <%= form.number_field :creator_id, id: :issue_creator_id %>
+    <%= form.hidden_field :creator_id, id: :issue_creator_id, value: current_user.id %>
   </div>
 
   <div class="field">

@@ -9,14 +9,14 @@
   <div>
     <div>
       <span> Issue #<%= @issue.id %> </span>
-      <span><%= @issue.status %></span>  
+      <span><%= @issue.status %></span> 
     </div>
     <div class="item">
       <div id="issue_main_content">
         <div class="issue_author">
           <a href="/users/<%= @issue.creator_id %>">
             <img class="avatar_img" src="https://res-5.cloudinary.com/hireclub/image/upload/default_avatar.png">
-            <span>User <%= @issue.creator_id %></span>
+            <span><%= User.all.find(@issue.creator_id).name %></span>
           </a>
           created an issue
           <time>x days ago</time>
