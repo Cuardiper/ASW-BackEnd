@@ -3,8 +3,26 @@
 <h1>Issues</h1>
 
 <p>Filter by: &nbsp <%= link_to 'All', issues_path %> &nbsp <%= link_to 'Unresolved', issues_path(:status => ['new','open']) %> &nbsp My issues  &nbsp Watching </p>
-<br>
 
+<% if $t != "" %>
+  <p> Type: <%= $t %> </p>
+<% end %>
+
+<% if $pi != "" %>
+  <p> Priority: <%= $pi %> </p>
+<% end %>
+
+<% if $s != "" and $s.length != 2 %>
+  <p> Status: <%= $s %> </p>
+<% end %>
+
+<% if $s != "" and $s.length == 2 %>
+  <p> Status: <%= $s[0] %>, <%= $s[1] %> </p>
+<% end %>
+
+<% if $a != "" %>
+  <p> Assignee: <%= User.all.find($a).name %> </p>
+<% end %>
 
 <table>
   <thead>
@@ -25,12 +43,12 @@
     <% @issues.each do |issue| %>
       <tr>
         <td><%= issue.title %></td>
-        <td><%= link_to issue.type_issue, issues_path(:type_issue => [issue.type_issue]) %></td>
-        <td><%= link_to issue.priority, issues_path(:priority => [issue.priority]) %></td>
-        <td><%= link_to issue.status, issues_path(:status => [issue.status]) %></td>
+        <td><%= link_to issue.type_issue, issues_path(:type_issue => [issue.type_issue], :priority => [$pi], :status => [$s], :assignee_id => [$a]) %></td>
+        <td><%= link_to issue.priority, issues_path(:type_issue => [$t], :priority => [issue.priority], :status => [$s], :assignee_id => [$a]) %></td>
+        <td><%= link_to issue.status, issues_path(:type_issue => [$t], :priority => [$pi], :status => [issue.status], :assignee_id => [$a]) %></td>
         <td><%= issue.votes %></td>
         <% if issue.assignee_id != nil %>
-          <td><%= User.all.find(issue.assignee_id).name %></td>
+          <td><%= link_to User.all.find(issue.assignee_id).name, issues_path(:type_issue => [$t], :priority => [$pi], :status => [$s], :assignee_id => [issue.assignee_id]) %></td>
         <% else %>
            <td></td>
         <% end %>

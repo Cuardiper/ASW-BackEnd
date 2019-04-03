@@ -1,13 +1,42 @@
 class IssuesController < ApplicationController
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
-
+  
+  $s = ""
+  $pi = ""
+  $t = ""
+  $a = ""
   # GET /issues
   # GET /issues.json
   def index
     @issues = Issue.all
-    @issues = @issues.status(params[:status]) if params[:status].present?
-    @issues = @issues.priority(params[:priority]) if params[:priority].present?
-    @issues = @issues.type_issue(params[:type_issue]) if params[:type_issue].present?
+    if params[:status].present? and params[:status].length != 2
+      $s = params[:status].join
+    end
+    if params[:priority].present?
+      $pi = params[:priority].join
+    end
+    if params[:type_issue].present?
+      $t = params[:type_issue].join
+    end 
+    if params[:assignee_id].present?
+      $a = params[:assignee_id].join
+    end
+    if (not params[:assignee_id].present?) and (not params[:type_issue].present?) and (not params[:priority].present?) and (not params[:status].present?)
+      $s = ""
+      $pi = ""
+      $t = ""
+      $a = ""
+    end
+    if params[:status].present? and params[:status].length == 2
+      $s = "new","open"
+    end
+    print $s
+    print $pi
+    print $t
+    print $a
+    @issues = @issues.status($s).priority($pi).type_issue($t).assignee_id($a)
+    
+    
   end
 
   # GET /issues/1
