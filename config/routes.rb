@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :issues
   resources :users
+  resources :comments
   #root 'issues#index'
   root to: "home#show"
 end 

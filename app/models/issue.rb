@@ -3,6 +3,7 @@ class Issue < ApplicationRecord
     validates :description, length: { maximum: 300 }
     belongs_to :creator, class_name: 'User'
     belongs_to :assignee, optional: true, class_name: 'User'
+    has_many :comments
     scope :status, -> (status) { where(status: status) if status.present? }
     scope :priority, -> (priority) { where(priority: priority) if priority.present? }
     scope :type_issue, -> (type_issue) { where(type_issue: type_issue) if type_issue.present? }

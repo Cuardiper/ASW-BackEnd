@@ -37,17 +37,11 @@
   </div>
 
   <div class="field">
-    <%= form.label :creator_id %>
-    <%= form.number_field :creator_id, id: :issue_creator_id %>
-  </div>
-
-  <div class="field">
     <%= form.label :assignee_id %>
-    <%= form.number_field :assignee_id, id: :issue_assignee_id %>
+    <%= form.select(:assignee_id, options_from_collection_for_select(User.all, :id, :name), prompt: "Select user") %>
   </div>
   
-
-
+  
   <div class="actions">
     <%= form.submit %>
   </div>
