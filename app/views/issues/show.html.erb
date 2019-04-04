@@ -29,6 +29,14 @@
       <div id="issue_comments_container">
         <h2>Comments:</h2>
       </div>
+      <div>
+        <%= form_for :comment, url: "/comments", method: "post" do |f| %>
+          <%= f.text_area :text, id: :comment_text %>
+          <%= f.hidden_field :issue_id, id: :comment_issue_id, value: @issue.id %>
+          <%= f.hidden_field :reporter_id, id: :comment_reporter_id, value: current_user.id %>
+          <%= f.submit %>
+        <% end %>
+      </div>
     </div>
     <div class="sidebar">
       <div class="issue_toolbar">

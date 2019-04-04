@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   validates :uid, presence: true
   has_many :issues
+  has_many :comments
   
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
