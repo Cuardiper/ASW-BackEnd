@@ -30,6 +30,7 @@ class IssuesController < ApplicationController
     if params[:status].present? and params[:status].length == 2
       $s = "new","open"
     end
+    
     print $s
     print $pi
     print $t
