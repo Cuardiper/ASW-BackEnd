@@ -5,4 +5,7 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
+  
+  
+  #aqui hago la funcion del login que ya me redirecciona 
 end
