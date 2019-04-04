@@ -20,3 +20,25 @@
 .issue_toolbar{
   
 }
+
+
+.hoverTable{
+border-collapse:collapse; 
+}
+
+.hoverTable td{ 
+padding-top:5px;
+padding-bottom:5px;
+padding-right:15px; 
+}
+
+.hoverTable tr:hover {
+      background-color: lightgrey;
+}
+
+
+
+
+
+
+

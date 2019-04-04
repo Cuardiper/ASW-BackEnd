@@ -30,13 +30,19 @@
         <h2>Comments(<%= @issue.comments.length %>)</h2>
         <% @issue.comments.each do |comment| %>
           <div class="comment">
-            <a href="/users/<%= comment.reporter_id %>">
-              <img class="avatar_img" src="https://res-5.cloudinary.com/hireclub/image/upload/default_avatar.png">
-              <span><%= User.all.find(comment.reporter_id).name %></span>  
-            </a>
-            <br>
-            <span><%= comment.text %></span>
-            <p><%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+            <div class="comment_author">
+              <a href="/users/<%= comment.reporter_id %>">
+                <img class="avatar_img" src="https://res-5.cloudinary.com/hireclub/image/upload/default_avatar.png">
+                <span><%= User.all.find(comment.reporter_id).name %></span>  
+              </a>
+            </div>
+            <p><%= comment.text %></p>
+            <div class="comment_toolbar">
+              <p>
+                <%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
+                <%= link_to 'Edit', edit_comment_path(comment) %>
+              </p>
+            </div>
           </div>
         <% end %>
       </div>
