@@ -1,4 +1,6 @@
 class IssuesController < ApplicationController
+  include SessionsHelper
+  before_action :logged_in_user
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
   
   $s = ""
@@ -104,4 +106,6 @@ class IssuesController < ApplicationController
     def issue_params
       params.require(:issue).permit(:title, :description, :type_issue, :priority, :status, :votes, :creator_id, :assignee_id)
     end
+    
+
 end
