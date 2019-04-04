@@ -27,7 +27,17 @@
         <div class="attachments"></div>
       </div>
       <div id="issue_comments_container">
-        <h2>Comments:</h2>
+        <h2>Comments(<%= @issue.comments.length %>)</h2>
+        <% @issue.comments.each do |comment| %>
+          <div class="comment">
+            <a href="/users/<%= comment.reporter_id %>">
+              <img class="avatar_img" src="https://res-5.cloudinary.com/hireclub/image/upload/default_avatar.png">
+              <span><%= User.all.find(comment.reporter_id).name %></span>  
+            </a>
+            <br>
+            <span><%= comment.text %></span>
+          </div>
+        <% end %>
       </div>
       <div>
         <%= form_for :comment, url: "/comments", method: "post" do |f| %>
