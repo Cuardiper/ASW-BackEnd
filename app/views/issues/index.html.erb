@@ -24,7 +24,7 @@
   <p> Assignee: <%= User.all.find($a).name %> </p>
 <% end %>
 
-<table>
+<table class="hoverTable">
   <thead>
     <tr>
       <th>Title</th>
@@ -42,7 +42,7 @@
   <tbody>
     <% @issues.each do |issue| %>
       <tr>
-        <td><%= issue.title %></td>
+        <td><%= link_to issue.title, issue %></td>
         <td><%= link_to issue.type_issue, issues_path(:type_issue => [issue.type_issue], :priority => [$pi], :status => [$s], :assignee_id => [$a]) %></td>
         <td><%= link_to issue.priority, issues_path(:type_issue => [$t], :priority => [issue.priority], :status => [$s], :assignee_id => [$a]) %></td>
         <td><%= link_to issue.status, issues_path(:type_issue => [$t], :priority => [$pi], :status => [issue.status], :assignee_id => [$a]) %></td>
@@ -54,8 +54,6 @@
         <% end %>
         <td><%= issue.created_at.in_time_zone('Madrid').to_formatted_s(:long) %></td>
         <td><%= issue.updated_at.in_time_zone('Madrid').to_formatted_s(:long) %></td>
-        <td><%= link_to 'Show', issue %></td>
-        <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
         <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
