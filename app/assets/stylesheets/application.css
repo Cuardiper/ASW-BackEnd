@@ -62,6 +62,7 @@ body {
       width: 222px;
       height: 69px;
     }
+
     #BarraSuperior-Right-Pic {
       margin-left: 12px;
       position: relative;
@@ -103,4 +104,5 @@ body {
     a:hover {
       background-color: transparent;
       text-decoration: underline;
+      color: blue;
     }
