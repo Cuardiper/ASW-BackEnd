@@ -1,22 +1,42 @@
 <!DOCTYPE html>
+
+<!--TOTA LA INTERFICIE GRAFICA QUE ES MOSTRARA EN TOT MOMENT, VEURE YIELD AL FINAL-->
+
 <html>
   <head>
-    <title>AWS Issue Tracker</title>
-    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <title>IssueTracker</title>
     <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  <!--Ultima versio de CSS
+  <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!--Opcional (Theme)
+  <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+  <!--Ultima versio de Javascript
+  <script src = "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+  
   </head>
   <body>
-    <div>
-      <% if current_user %>
-        Signed in as <strong><%= current_user.name %></strong>!
-        <%= link_to "Sign out", signout_path, id: "sign_out" %>
-      <% else %>
-        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
-      <% end %>
-    </div>
-    <div>
+      <div id = "BarraSuperior">
+        <!--Brand i Toggle agrupats per millorar el display en movils -->
+        <div id = "BarraSuperior-Left">
+          <h1 id = "mainBtn"><%= link_to signout_path do %><%= image_tag('exit.png', width: 51, height: 51) %><% end %></h1>
+        </div>
+        
+        <!--Obtenir els nav links i les forms per fer toggling-->
+        <div id = "BarraSuperior-Right">
+          <% if current_user %>
+            <div id = "BarraSuperior-Right-Pic"><%= image_tag(current_user.foto, width: 51, height: 51, class: 'img-circle') %></div>
+            <div id = "BarraSuperior-Right-LoggedIn">Signed in as: <%= current_user.name %></div>
+          <% else %>
+             <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
+          <% end %>
+        </div> <!--Acaba la navbar-->
+      </div> <!--Acaba container-fluid-->
+    
+    <!--INTERFICIE GRAFICA EXTRA QUE ES MOSTRA EN FUNCIO DE A QUIN CONTROLLER APUNTEM-->
     <%= yield %>
-    </div>
+    
   </body>
 </html>

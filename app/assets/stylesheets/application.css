@@ -2,8 +2,8 @@
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
  *
  * You're free to add application-wide styles to this file and they'll appear at the bottom of the
  * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
@@ -13,17 +13,84 @@
  *= require_tree .
  *= require_self
  */
- 
- a {
-    text-decoration: none;
- }
- 
- a:hover {
-   background-color: transparent;
-   color: black;
-   text-decoration: underline;
- }
- 
- a:visited {
-   color: black;
- }
+
+body {
+      height: 100%;
+      padding: 12px;
+    }
+    /*#page {
+      position: relative;
+      height: 100%;
+    }*/
+    /*Barra superior que es mostra sempre*/
+    #BarraSuperior {
+      position: relative;
+      float: top;
+      width: 100%;
+      background: #205081;
+      color: #fff;
+      text-align: center;
+      height: 69px;
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 18px;
+    }
+    #BarraSuperior-Left {
+      position: relative;
+      float: left;
+      width: 69px;
+      height: 69px;
+      text-align: left;
+    }
+    #mainBtn {
+      padding-left: 12px;
+      margin-top: 9px;
+      margin-bottom: 7px;
+    }
+    #BarraSuperior-Right {
+      position: relative;
+      float: right;
+      width: 80%;
+      height: 69px;
+      text-align: right;
+    }
+    #BarraSuperior-Right-LoggedIn {
+      position: relative;
+      float: right;
+      line-height: 69px;
+      text-align: center;
+      width: 222px;
+      height: 69px;
+    }
+    #BarraSuperior-Right-Pic {
+      position: relative;
+      float: right;
+      text-align: center;
+      margin-top: 9px;
+      margin-bottom: 7px;
+      width: 54px;
+      height: 54px;
+    }
+    #BarraSuperior-Right-SignOut {
+      position: relative;
+      float: right;
+      line-height: 69px;
+      text-align: center;
+      width: 81px;
+      height: 69px;
+        color: #fff;
+    }
+    #LoginBtnContainer {
+      padding-left: 32px;
+      padding-right: 12px;
+      margin-top: 9px;
+      margin-bottom: 7px;
+    }
+    .twitterLi {
+      list-style-type: none;
+      padding-top: 9px;
+      padding-right: 12px;
+    }
+    .img-circle {
+      border-radius: 30px;
+    }

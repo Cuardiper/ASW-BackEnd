@@ -7,5 +7,5 @@ class ApplicationController < ActionController::Base
   end
   
   
-  #aqui hago la funcion del login que ya me redirecciona 
+  
 end
