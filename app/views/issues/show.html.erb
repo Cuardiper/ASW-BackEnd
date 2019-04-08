@@ -72,10 +72,12 @@
               </a>
             </div>
             <p><%= comment.text %></p>
-            <div class="comment_toolbar">
-              <p>
+            <div>
+              <p class="comment_toolbar">
+                <% if current_user.id == comment.reporter_id %>
+                  <%= link_to 'Edit', edit_comment_path(comment) %>
+                <% end %>
                 <%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
-                <%= link_to 'Edit', edit_comment_path(comment) %>
               </p>
             </div>
           </div>

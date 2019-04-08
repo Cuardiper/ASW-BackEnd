@@ -101,5 +101,6 @@ body {
     
     a:hover {
       background-color: transparent;
-      color: blue
+      color: blue;
+      text-decoration: underline;
     }
