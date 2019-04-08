@@ -37,7 +37,7 @@ body {
     }
     #BarraSuperior-Left {
       position: relative;
-      float: left;
+      float: Right;
       width: 69px;
       height: 69px;
       text-align: left;
@@ -49,22 +49,23 @@ body {
     }
     #BarraSuperior-Right {
       position: relative;
-      float: right;
+      float: Left;
       width: 80%;
       height: 69px;
       text-align: right;
     }
     #BarraSuperior-Right-LoggedIn {
       position: relative;
-      float: right;
+      float: Left;
       line-height: 69px;
       text-align: center;
       width: 222px;
       height: 69px;
     }
     #BarraSuperior-Right-Pic {
+      margin-left: 12px;
       position: relative;
-      float: right;
+      float: Left;
       text-align: center;
       margin-top: 9px;
       margin-bottom: 7px;
@@ -101,6 +102,5 @@ body {
     
     a:hover {
       background-color: transparent;
-      color: blue;
       text-decoration: underline;
     }
