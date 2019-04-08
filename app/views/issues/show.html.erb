@@ -33,7 +33,21 @@
         <p>
           <strong>Votes:</strong>
           <%= @issue.votes %>
-        </p>  
+        </p>
+        <p>
+          <strong>Watchers:</strong>
+          <%= @issue.watchers.size %>
+          <% 
+          begin
+          @issue.watchers.find(current_user.id)
+          rescue ActiveRecord::RecordNotFound => msg
+          end
+          if msg != nil %>
+          <span><%= link_to 'Watch this issue', watch_url(id: @issue.id),  method: :watch  %></span>
+          <% else %>
+           <span><%= link_to 'Stop watching', unwatch_url(id: @issue.id),  method: :unwatch  %></span>
+          <% end %>
+        </p>
       </div>
   </div>
   <header>
