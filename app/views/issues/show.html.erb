@@ -87,6 +87,20 @@
         <p>
           <strong>Votes:</strong>
           <%= @issue.votes %>
+        </p>
+         <p>
+          <strong>Watchers:</strong>
+          <%= @issue.watchers.size %>
+          <% 
+          begin
+          @issue.watchers.find(current_user.id)
+          rescue ActiveRecord::RecordNotFound => msg
+          end
+          if msg != nil %>
+          <span><%= link_to 'Watch this issue',issues_path %></span>
+          <% else %>
+           <p>He encontrado current user</p>
+          <% end %>
         </p>  
       </div>
     </div>

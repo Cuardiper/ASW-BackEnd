@@ -37,6 +37,7 @@ class IssuesController < ApplicationController
     print $pi
     print $t
     print $a
+    
     @issues = @issues.status($s).priority($pi).type_issue($t).assignee_id($a)
     
     
@@ -94,6 +95,12 @@ class IssuesController < ApplicationController
       format.html { redirect_to issues_url, notice: 'Issue was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+  
+  
+  def watch
+    Issue.find(5).watchers.create({index_issues_users_on_issue_id: 1})
+    @issue.watchers.create({issue_id: 5, user_id: 1})
   end
 
   private
