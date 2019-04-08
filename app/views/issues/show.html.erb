@@ -1,6 +1,41 @@
 <p id="notice"><%= notice %></p>
 
 <div id="content">
+  <div class="sidebar">
+      <div class="issue_toolbar">
+        <%= form_with(model: @issue, local: true) do |form| %>
+          <%= form.label :status %>
+          <%= form.select :status, ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed']%>
+          <%= form.submit %>
+        <% end %>
+      </div>
+      <div class="sidebar_info">
+        <p>
+        <strong>Assignee:</strong>
+          <% if @issue.assignee_id != nil %>
+            <%= User.all.find(@issue.assignee_id).name %>
+          <% else %>
+            <%= "-" %>
+          <% end %>
+        </p>
+        <p>
+          <strong>Type:</strong>
+          <%= @issue.type_issue %>
+        </p>
+        <p>
+          <strong>Priority:</strong>
+          <%= @issue.priority %>
+        </p>
+        <p>
+          <strong>Status:</strong>
+          <%= @issue.status %>
+        </p>
+        <p>
+          <strong>Votes:</strong>
+          <%= @issue.votes %>
+        </p>  
+      </div>
+  </div>
   <header>
     <h1>
       <span> <%= @issue.title %> </span>
@@ -53,41 +88,6 @@
           <%= f.hidden_field :reporter_id, id: :comment_reporter_id, value: current_user.id %>
           <%= f.submit %>
         <% end %>
-      </div>
-    </div>
-    <div class="sidebar">
-      <div class="issue_toolbar">
-        <%= form_with(model: @issue, local: true) do |form| %>
-          <%= form.label :status %>
-          <%= form.select :status, ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed']%>
-          <%= form.submit %>
-        <% end %>
-      </div>
-      <div class="sidebar_info">
-        <p>
-        <strong>Assignee:</strong>
-          <% if @issue.assignee_id != nil %>
-            <%= User.all.find(@issue.assignee_id).name %>
-          <% else %>
-            <%= "-" %>
-          <% end %>
-        </p>
-        <p>
-          <strong>Type:</strong>
-          <%= @issue.type_issue %>
-        </p>
-        <p>
-          <strong>Priority:</strong>
-          <%= @issue.priority %>
-        </p>
-        <p>
-          <strong>Status:</strong>
-          <%= @issue.status %>
-        </p>
-        <p>
-          <strong>Votes:</strong>
-          <%= @issue.votes %>
-        </p>  
       </div>
     </div>
   </div>
