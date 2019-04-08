@@ -94,3 +94,12 @@ body {
     .img-circle {
       border-radius: 30px;
     }
+    
+    a {
+      text-decoration:  none;
+    }
+    
+    a:hover {
+      background-color: transparent;
+      color: blue
+    }
