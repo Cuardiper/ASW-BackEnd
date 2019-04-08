@@ -97,10 +97,20 @@ class IssuesController < ApplicationController
     end
   end
   
-  
   def watch
-    Issue.find(5).watchers.create({index_issues_users_on_issue_id: 1})
-    @issue.watchers.create({issue_id: 5, user_id: 1})
+    @issue = Issue.find(params[:id])
+    @issue.watchers << User.find(current_user.id)
+    respond_to do |format|
+      format.html { redirect_back fallback_location: "/issues", notice: "You are now watching issue #" + @issue.id.to_s }
+    end
+  end
+  
+  def unwatch
+    @issue = Issue.find(params[:id])
+    @issue.watchers.delete(User.find(current_user.id)) 
+    respond_to do |format|
+      format.html { redirect_back fallback_location: "/issues", notice: "You are no longer watching issue #" + @issue.id.to_s }
+    end
   end
 
   private

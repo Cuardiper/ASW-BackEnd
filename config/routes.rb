@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   resources :users
   resources :comments
   
+  post '/issues/:id/watch' => "issues#watch", as: :watch
+  post '/issues/:id/unwatch' => "issues#unwatch", as: :unwatch
+  
   #root 'issues#index'
   root to: "home#show"
 end 
