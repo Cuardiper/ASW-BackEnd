@@ -37,6 +37,7 @@ class IssuesController < ApplicationController
     print $pi
     print $t
     print $a
+    
     @issues = @issues.status($s).priority($pi).type_issue($t).assignee_id($a)
     
     
@@ -93,6 +94,22 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to issues_url, notice: 'Issue was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+  
+  def watch
+    @issue = Issue.find(params[:id])
+    @issue.watchers << User.find(current_user.id)
+    respond_to do |format|
+      format.html { redirect_back fallback_location: "/issues", notice: "You are now watching issue #" + @issue.id.to_s }
+    end
+  end
+  
+  def unwatch
+    @issue = Issue.find(params[:id])
+    @issue.watchers.delete(User.find(current_user.id)) 
+    respond_to do |format|
+      format.html { redirect_back fallback_location: "/issues", notice: "You are no longer watching issue #" + @issue.id.to_s }
     end
   end
 
