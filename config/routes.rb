@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   post '/issues/:id/watch' => "issues#watch", as: :watch
   post '/issues/:id/unwatch' => "issues#unwatch", as: :unwatch
   
+  post '/issues/:id/vote' => "issues#vote", as: :vote
+  post '/issues/:id/unvote' => "issues#unvote", as: :unvote
+  
   #root 'issues#index'
   root to: "home#show"
 end 

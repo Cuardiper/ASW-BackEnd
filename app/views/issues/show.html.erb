@@ -32,7 +32,12 @@
         </p>
         <p>
           <strong>Votes:</strong>
-          <%= @issue.votes %>
+          <%= @issue.votes.size %>
+          <% if Vote.where(:user_id => current_user.id, :issue_id => params[:id]).take == nil %>
+          <span><%= link_to 'Vote for this issue', vote_url(id: @issue.id),  method: :vote  %></span>
+          <% else %>
+           <span><%= link_to 'Remove vote', unvote_url(id: @issue.id),  method: :unvote  %></span>
+          <% end %>
         </p>
         <p>
           <strong>Watchers:</strong>

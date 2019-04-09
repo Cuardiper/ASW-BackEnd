@@ -46,7 +46,7 @@
         <td><%= link_to issue.type_issue, issues_path(:type_issue => [issue.type_issue], :priority => [$pi], :status => [$s], :assignee_id => [$a]) %></td>
         <td><%= link_to issue.priority, issues_path(:type_issue => [$t], :priority => [issue.priority], :status => [$s], :assignee_id => [$a]) %></td>
         <td><%= link_to issue.status, issues_path(:type_issue => [$t], :priority => [$pi], :status => [issue.status], :assignee_id => [$a]) %></td>
-        <td><%= issue.votes %></td>
+        <td><%= issue.votes.size %></td>
         <% if issue.assignee_id != nil %>
           <td><%= link_to User.all.find(issue.assignee_id).name, issues_path(:type_issue => [$t], :priority => [$pi], :status => [$s], :assignee_id => [issue.assignee_id]) %></td>
         <% else %>

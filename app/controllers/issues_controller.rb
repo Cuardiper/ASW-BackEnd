@@ -112,6 +112,28 @@ class IssuesController < ApplicationController
       format.html { redirect_back fallback_location: "/issues", notice: "You are no longer watching issue #" + @issue.id.to_s }
     end
   end
+  
+  
+  
+  def vote
+    @vote = Vote.create(:user_id => current_user.id, :issue_id => params[:id])
+    @vote.save()
+    respond_to do |format|
+      format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
+    end
+  end
+  
+  def unvote
+    Vote.where(user_id: current_user.id, issue_id: params[:id]).take.destroy
+    
+    respond_to do |format|
+      format.html { redirect_back fallback_location: "/issues", notice: "You have unvoted the issue #" + params[:id].to_s }
+    end
+  end
+  
+  
+  
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

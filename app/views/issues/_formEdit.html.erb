@@ -21,8 +21,23 @@
     <%= form.text_area :description, id: :issue_description %>
   </div>
 
+  <div>
+    <p> Creator </p>
+    <a href="/users/<%= issue.creator_id %>">
+      <%= image_tag( User.all.find(issue.creator_id).foto, width: 25, height: 25, class: 'img-circle') %>
+      <span><%= User.all.find(issue.creator_id).name %></span>
+    </a>
+  </div>
+  
+  <br/>
+  
   <div class="field">
-    <%= form.label :type_issue %>
+    <%= form.label :assignee_id %>
+    <%= form.select(:assignee_id, options_from_collection_for_select(User.all, :id, :name), prompt: "Select user") %>
+  </div>
+  
+  <div class="field">
+    <%= form.label "Type" %>
     <%= form.select :type_issue, ['bug', 'enhancement','proposal','task']%>
   </div>
 
@@ -31,17 +46,6 @@
     <%= form.select :priority, ['trivial', 'minor','major','critical','blocker']%>
   </div>
 
-  <div class="field">
-    <%= form.label :votes %>
-    <%= form.number_field :votes, id: :issue_votes %>
-  </div>
-
-  <div class="field">
-    <%= form.label :assignee_id %>
-    <%= form.select(:assignee_id, options_from_collection_for_select(User.all, :id, :name), prompt: "Select user") %>
-  </div>
-  
-  
   <div class="actions">
     <%= form.submit %>
   </div>
