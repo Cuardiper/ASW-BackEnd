@@ -21,8 +21,13 @@
     <%= form.text_area :description, id: :issue_description %>
   </div>
 
+ <div class="field">
+    <%= form.label :assignee_id %>
+    <%= form.select(:assignee_id, options_from_collection_for_select(User.all, :id, :name), prompt: "Select user") %>
+  </div>
+  
   <div class="field">
-    <%= form.label :type_issue %>
+    <%= form.label "Type" %>
     <%= form.select :type_issue, ['bug', 'enhancement','proposal','task']%>
   </div>
 
@@ -36,19 +41,10 @@
   </div>
 
   <div class="field">
-    <%= form.label :votes %>
-    <%= form.number_field :votes, id: :issue_votes %>
-  </div>
-  
-  <div class="field">
     <%= form.hidden_field :creator_id, id: :issue_creator_id, value: current_user.id %>
   </div>
 
-  <div class="field">
-    <%= form.label :assignee_id %>
-    <%= form.select(:assignee_id, options_from_collection_for_select(User.all, :id, :name), prompt: "Select user") %>
-  </div>
-  
+ 
  
 
 
