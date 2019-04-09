@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190408111109) do
+ActiveRecord::Schema.define(version: 20190409185538) do
+
+  create_table "attachments", force: :cascade do |t|
+    t.string "title"
+    t.string "issue_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.bigint "file_file_size"
+    t.datetime "file_updated_at"
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text "text"
