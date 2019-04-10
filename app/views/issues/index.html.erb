@@ -42,9 +42,45 @@
   <tbody>
     <% @issues.each do |issue| %>
       <tr>
+        
         <td><%= link_to issue.title, issue %></td>
-        <td><%= link_to issue.type_issue, issues_path(:type_issue => [issue.type_issue], :priority => [$pi], :status => [$s], :assignee_id => [$a]) %></td>
-        <td><%= link_to issue.priority, issues_path(:type_issue => [$t], :priority => [issue.priority], :status => [$s], :assignee_id => [$a]) %></td>
+        
+        <% if issue.type_issue == 'bug' %>
+          <td><%= link_to image_tag('bug.svg', width: 15, height: 15), issues_path(:type_issue => [issue.type_issue], :priority => [$pi], :status => [$s], :assignee_id => [$a]) %></td>
+        <%end%>
+        
+        <% if issue.type_issue == 'task' %>
+          <td><%= link_to image_tag('task.svg', width: 15, height: 15), issues_path(:type_issue => [issue.type_issue], :priority => [$pi], :status => [$s], :assignee_id => [$a]) %></td>
+        <%end%>
+        
+        <% if issue.type_issue == 'enhancement' %>
+          <td><%= link_to image_tag('enhancement.svg', width: 15, height: 15), issues_path(:type_issue => [issue.type_issue], :priority => [$pi], :status => [$s], :assignee_id => [$a]) %></td>
+        <%end%>
+        
+        <% if issue.type_issue == 'proposal' %>
+          <td><%= link_to image_tag('proposal.svg', width: 15, height: 15), issues_path(:type_issue => [issue.type_issue], :priority => [$pi], :status => [$s], :assignee_id => [$a]) %></td>
+        <%end%>
+        
+        <% if issue.priority == 'blocker' %>
+          <td><%= link_to image_tag('blocker.svg', width: 15, height: 15), issues_path(:type_issue => [$t], :priority => [issue.priority], :status => [$s], :assignee_id => [$a]) %></td>
+        <%end%>
+        
+        <% if issue.priority == 'critical' %>
+          <td><%= link_to image_tag('critical.svg', width: 15, height: 15), issues_path(:type_issue => [$t], :priority => [issue.priority], :status => [$s], :assignee_id => [$a]) %></td>
+        <%end%>
+        
+        <% if issue.priority == 'major' %>
+          <td><%= link_to image_tag('major.svg', width: 15, height: 15), issues_path(:type_issue => [$t], :priority => [issue.priority], :status => [$s], :assignee_id => [$a]) %></td>
+        <%end%>
+        
+        <% if issue.priority == 'minor' %>
+          <td><%= link_to image_tag('minor.svg', width: 15, height: 15), issues_path(:type_issue => [$t], :priority => [issue.priority], :status => [$s], :assignee_id => [$a]) %></td>
+        <%end%>
+        
+        <% if issue.priority == 'trivial' %>
+          <td><%= link_to image_tag('trivial.svg', width: 15, height: 15), issues_path(:type_issue => [$t], :priority => [issue.priority], :status => [$s], :assignee_id => [$a]) %></td>
+        <%end%>
+        
         <td><%= link_to issue.status, issues_path(:type_issue => [$t], :priority => [$pi], :status => [issue.status], :assignee_id => [$a]) %></td>
         <td><%= issue.votes.size %></td>
         <% if issue.assignee_id != nil %>
