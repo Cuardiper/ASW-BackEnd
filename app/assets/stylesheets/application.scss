@@ -106,3 +106,16 @@ body {
       text-decoration: underline;
       color: blue;
     }
+    
+    a:visited {
+      color:black;
+    }
+    
+    .attachmentLink{
+      color:#3e89f2;
+      margin-right:5px;
+    }
+    
+    .attachmentLink:visited{
+      color:#3e89f2;
+    }

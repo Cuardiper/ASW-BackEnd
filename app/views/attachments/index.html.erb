@@ -2,6 +2,7 @@
 
 <div class="media">
   <% @attachments.each do |attachment| %>
-    <p><%= attachment.created_at%></p>
+    <p><%= attachment.issue_id %></p>
+    <%= link_to attachment.file.url, attachment.file.url, target: '_blank' %>
   <% end %>
 </div>

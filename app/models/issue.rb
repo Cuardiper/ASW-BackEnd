@@ -4,6 +4,7 @@ class Issue < ApplicationRecord
     belongs_to :creator, class_name: 'User'
     belongs_to :assignee, optional: true, class_name: 'User'
     has_many :comments
+    has_many :attachments
     has_and_belongs_to_many :watchers, class_name: 'User'
     scope :status, -> (status) { where(status: status) if status.present? }
     scope :priority, -> (priority) { where(priority: priority) if priority.present? }

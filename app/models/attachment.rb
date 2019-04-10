@@ -1,4 +1,7 @@
 class Attachment < ApplicationRecord
+  
+  belongs_to :issue
+  
   #Mounts paperclip file
   has_attached_file :file
   

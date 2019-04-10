@@ -22,11 +22,22 @@ class AttachmentsController < ApplicationController
   end
  end
  
+ #Destroy action for deleting an already uploaded image
+  def destroy
+  @attachment = Attachment.find(params[:id])
+    if @attachment.destroy
+      flash[:notice] = "Successfully deleted attachment!"
+      redirect_to root_path
+    else
+      flash[:alert] = "Error deleting attachment!"
+    end
+  end
+ 
  private
 
  #Permitted parameters when creating an attachment. This is used for security reasons.
  def attachment_params
-  params.require(:attachment).permit(:title, :file)
+  params.require(:attachment).permit(:title, :issue_id, :file)
  end
  
 end
