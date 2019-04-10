@@ -39,6 +39,10 @@
   <div class="field">
     <%= form.hidden_field :status, id: :issue_status, value: "new" %>
   </div>
+  
+  <div class="field">
+    <%= form.hidden_field :votes, id: :issue_votes, value: 0 %>
+  </div>
 
   <div class="field">
     <%= form.hidden_field :creator_id, id: :issue_creator_id, value: current_user.id %>

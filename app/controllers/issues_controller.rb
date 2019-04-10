@@ -3,6 +3,8 @@ class IssuesController < ApplicationController
   before_action :logged_in_user
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
   
+  helper_method :sort_column, :sort_direction
+  
   $s = ""
   $pi = ""
   $t = ""
@@ -10,7 +12,7 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
   def index
-    @issues = Issue.all
+    @issues = Issue.all.order(sort_column + " " + sort_direction)
     if params[:status].present? and params[:status].length != 2
       $s = params[:status].join
     end
@@ -116,8 +118,7 @@ class IssuesController < ApplicationController
   
   
   def vote
-    @vote = Vote.create(:user_id => current_user.id, :issue_id => params[:id])
-    @vote.save()
+    Vote.create(:user_id => current_user.id, :issue_id => params[:id])
     respond_to do |format|
       format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
     end
@@ -125,7 +126,6 @@ class IssuesController < ApplicationController
   
   def unvote
     Vote.where(user_id: current_user.id, issue_id: params[:id]).take.destroy
-    
     respond_to do |format|
       format.html { redirect_back fallback_location: "/issues", notice: "You have unvoted the issue #" + params[:id].to_s }
     end
@@ -145,6 +145,17 @@ class IssuesController < ApplicationController
     def issue_params
       params.require(:issue).permit(:title, :description, :type_issue, :priority, :status, :creator_id, :assignee_id)
     end
+    
+    def sort_column
+      Issue.column_names.include?(params[:sort]) ? params[:sort] : "created_at"
+      #Issue.select("issues.id, issues.type_issue, issues.priority, issues.status,issues.votes, issues.created_at, issues.updated_at , users.name")
+      #.joins(:assignee).column_names.include?(params[:sort]) ? params[:sort] : "created_at"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+    end
+
     
 
 end

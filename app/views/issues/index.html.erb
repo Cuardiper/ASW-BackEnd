@@ -27,14 +27,14 @@
 <table class="hoverTable">
   <thead class = hoverTableHeader>
     <tr>
-      <th>Title</th>
-      <th>Type</th>
-      <th>Priority</th>
-      <th>Status</th>
+      <th><%= sortable "id", "Title" %></th>
+      <th><%= sortable "type_issue", "Type" %></th>
+      <th><%= sortable "priority", "Priority" %></th>
+      <th><%= sortable "status", "Status" %></th>
       <th>Votes</th>
-      <th>Assignee</th>
-      <th>Created</th>
-      <th>Updated</th>
+      <th><%= sortable "assignee_id", "Assignee" %></th>
+      <th><%= sortable "created_at", "Created" %></th>
+      <th><%= sortable "updated_at", "Updated" %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -43,7 +43,7 @@
     <% @issues.each do |issue| %>
       <tr>
         
-        <td><%= link_to issue.title, issue %></td>
+        <td><%= link_to "#"+issue.id.to_s+": "+issue.title, issue %></td>
         
         <% if issue.type_issue == 'bug' %>
           <td><%= link_to image_tag('bug.svg', width: 15, height: 15), issues_path(:type_issue => [issue.type_issue], :priority => [$pi], :status => [$s], :assignee_id => [$a]) %></td>
@@ -80,7 +80,7 @@
         <% if issue.priority == 'trivial' %>
           <td><%= link_to image_tag('trivial.svg', width: 15, height: 15), issues_path(:type_issue => [$t], :priority => [issue.priority], :status => [$s], :assignee_id => [$a]) %></td>
         <%end%>
-        
+
         <td><%= link_to issue.status, issues_path(:type_issue => [$t], :priority => [$pi], :status => [issue.status], :assignee_id => [$a]) %></td>
         <td><%= issue.votes.size %></td>
         <% if issue.assignee_id != nil %>
