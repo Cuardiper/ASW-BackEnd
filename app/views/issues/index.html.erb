@@ -55,9 +55,9 @@
         <td><%= issue.created_at.in_time_zone('Madrid').to_formatted_s(:long) %></td>
         <td><%= issue.updated_at.in_time_zone('Madrid').to_formatted_s(:long) %></td>
         <% if issue.watchers.exists?(:id => current_user.id) %>
-          <td><%= link_to 'Unwatch', unwatch_url(id: issue.id),  method: :unwatch %></td>
+          <td><%= link_to image_tag('watching.svg', width: 20, height: 20), unwatch_url(id: issue.id),  method: :unwatch %></td>
         <% else %>
-           <td><%= link_to 'Watch', watch_url(id: issue.id),  method: :watch  %></td>
+           <td><%= link_to image_tag('not-watching.svg', width: 20, height: 20), watch_url(id: issue.id),  method: :watch  %></td>
         <% end %>
         <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
