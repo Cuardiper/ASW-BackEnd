@@ -14,8 +14,9 @@ class AttachmentsController < ApplicationController
  def create
   @attachment = Attachment.new(attachment_params)
   if @attachment.save
+   id_isue = @attachment.issue_id.to_s
    flash[:notice] = "Successfully added new attachment!"
-   redirect_to root_path
+   redirect_to "/issues/" + id_isue
   else
    flash[:alert] = "Error adding new attachment!"
    render :new
@@ -26,8 +27,9 @@ class AttachmentsController < ApplicationController
   def destroy
   @attachment = Attachment.find(params[:id])
     if @attachment.destroy
+      id_isue = @attachment.issue_id.to_s
       flash[:notice] = "Successfully deleted attachment!"
-      redirect_to root_path
+      redirect_to "/issues/" + id_isue
     else
       flash[:alert] = "Error deleting attachment!"
     end
