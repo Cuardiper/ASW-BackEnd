@@ -35,13 +35,11 @@ class IssuesController < ApplicationController
       $s = "new","open"
     end
     
-    print $s
-    print $pi
-    print $t
-    print $a
     
     @issues = @issues.status($s).priority($pi).type_issue($t).assignee_id($a)
-    
+    if params.has_key?(:watcher)
+      @issues = User.find(params[:watcher]).watched
+    end
     
   end
 
