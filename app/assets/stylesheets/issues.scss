@@ -41,9 +41,18 @@ padding-right:15px;
       background-color: lightgrey;
 }
 
+.current {
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.asc {
+  border-style: solid none none none; 
+  border-color: #205081 #205081 #205081 #205081;
+}
 
 
-
-
-
-
+.desc {
+  border-style: none none solid none; 
+  border-color: #205081 #205081 #205081 #205081;
+}

@@ -27,14 +27,14 @@
 <table class="hoverTable">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Type</th>
-      <th>Priority</th>
-      <th>Status</th>
+      <th><%= sortable "id", "Title" %></th>
+      <th><%= sortable "type_issue", "Type" %></th>
+      <th><%= sortable "priority", "Priority" %></th>
+      <th><%= sortable "status", "Status" %></th>
       <th>Votes</th>
-      <th>Assignee</th>
-      <th>Created</th>
-      <th>Updated</th>
+      <th><%= sortable "assignee_id", "Assignee" %></th>
+      <th><%= sortable "created_at", "Created" %></th>
+      <th><%= sortable "updated_at", "Updated" %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -42,7 +42,7 @@
   <tbody>
     <% @issues.each do |issue| %>
       <tr>
-        <td><%= link_to issue.title, issue %></td>
+        <td><%= link_to "#"+issue.id.to_s+": "+issue.title, issue %></td>
         <td><%= link_to issue.type_issue, issues_path(:type_issue => [issue.type_issue], :priority => [$pi], :status => [$s], :assignee_id => [$a]) %></td>
         <td><%= link_to issue.priority, issues_path(:type_issue => [$t], :priority => [issue.priority], :status => [$s], :assignee_id => [$a]) %></td>
         <td><%= link_to issue.status, issues_path(:type_issue => [$t], :priority => [$pi], :status => [issue.status], :assignee_id => [$a]) %></td>
