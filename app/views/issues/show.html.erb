@@ -78,7 +78,12 @@
         <div class="issue_description">
           <p><%= @issue.description %></p>
         </div>
-        <div class="attachments"></div>
+        <div class="attachments">
+          <% @issue.attachments.each do |attachment| %>
+            <!--img src="https://cdn2.iconfinder.com/data/icons/attachment/154/attach-clip-round-function-ui-512.png" alt="Smiley face" height="42" width="42"-->
+            <%= link_to attachment.file_file_name, attachment.file.url, target: '_blank', class: "attachmentLink" %>
+          <% end %>
+        </div>
       </div>
       <div id="issue_comments_container">
         <h2>Comments(<%= @issue.comments.length %>)</h2>
@@ -107,6 +112,14 @@
           <%= f.text_area :text, id: :comment_text %>
           <%= f.hidden_field :issue_id, id: :comment_issue_id, value: @issue.id %>
           <%= f.hidden_field :reporter_id, id: :comment_reporter_id, value: current_user.id %>
+          <%= f.submit %>
+        <% end %>
+      </div>
+      <div class="add_attachments">
+        <h2>Add attachments</h2>
+        <%= form_for :attachment, url: "/attachments", method: "post" do |f| %>
+          <%= f.file_field :file %>
+          <%= f.hidden_field :issue_id, id: :attachment_issue_id, value: @issue.id %>
           <%= f.submit %>
         <% end %>
       </div>

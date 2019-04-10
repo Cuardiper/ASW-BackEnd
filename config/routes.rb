@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :issues
   resources :users
   resources :comments
+  resources :attachments
   
   post '/issues/:id/watch' => "issues#watch", as: :watch
   post '/issues/:id/unwatch' => "issues#unwatch", as: :unwatch

@@ -1,0 +1,8 @@
+<div class="page-header"><h1>Upload File</h1></div>
+
+<div class="media">
+  <% @attachments.each do |attachment| %>
+    <p><%= attachment.issue_id %></p>
+    <%= link_to attachment.file.url, attachment.file.url, target: '_blank' %>
+  <% end %>
+</div>
