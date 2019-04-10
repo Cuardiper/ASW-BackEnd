@@ -25,7 +25,7 @@
 <% end %>
 
 <table class="hoverTable">
-  <thead>
+  <thead class = hoverTableHeader>
     <tr>
       <th>Title</th>
       <th>Type</th>
@@ -84,7 +84,7 @@
         <td><%= link_to issue.status, issues_path(:type_issue => [$t], :priority => [$pi], :status => [issue.status], :assignee_id => [$a]) %></td>
         <td><%= issue.votes.size %></td>
         <% if issue.assignee_id != nil %>
-          <td><%= link_to User.all.find(issue.assignee_id).name, issues_path(:type_issue => [$t], :priority => [$pi], :status => [$s], :assignee_id => [issue.assignee_id]) %></td>
+          <td><%= link_to image_tag(User.all.find(issue.assignee_id).foto, width: 20, height: 20,class: 'img-circle'), issues_path(:type_issue => [$t], :priority => [$pi], :status => [$s], :assignee_id => [issue.assignee_id]) %><%= User.all.find(issue.assignee_id).name %></td>
         <% else %>
            <td></td>
         <% end %>
