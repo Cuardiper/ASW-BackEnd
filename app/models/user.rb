@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :issues
   has_many :comments
   has_and_belongs_to_many :watched, class_name: 'Issue'
-  has_many :votes
+  has_many :votos
   
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
