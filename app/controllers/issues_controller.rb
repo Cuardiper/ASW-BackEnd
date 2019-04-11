@@ -116,14 +116,19 @@ class IssuesController < ApplicationController
   
   
   def vote
-    Vote.create(:user_id => current_user.id, :issue_id => params[:id])
+    Voto.create(:user_id => current_user.id, :issue_id => params[:id])
+    @issue = Issue.find(params[:id])
+    @issue.increment!("votes")
     respond_to do |format|
       format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
     end
   end
   
   def unvote
-    Vote.where(user_id: current_user.id, issue_id: params[:id]).take.destroy
+    @vote = Voto.where(issue_id: params[:id], user_id: current_user.id).take
+    @vote.destroy
+    @issue = Issue.find(params[:id])
+    @issue.decrement!("votes")
     respond_to do |format|
       format.html { redirect_back fallback_location: "/issues", notice: "You have unvoted the issue #" + params[:id].to_s }
     end

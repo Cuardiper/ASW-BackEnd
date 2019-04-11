@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Membres de l'equip:
 
-Things you may want to cover:
+* Álvaro Luque
 
-* Ruby version
+* Alejandra Volkova
 
-* System dependencies
+* Daniel Esquina
 
-* Configuration
+* Arthur Bernal 
 
-* Database creation
+### Link a heroku:
 
-* Database initialization
+https://calm-scrubland-98205.herokuapp.com/
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
