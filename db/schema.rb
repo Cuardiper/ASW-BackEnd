@@ -63,6 +63,15 @@ ActiveRecord::Schema.define(version: 20190411085236) do
     t.string "foto"
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "issue_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["issue_id"], name: "index_votes_on_issue_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
   create_table "votos", force: :cascade do |t|
     t.integer "issue_id"
     t.integer "user_id"
