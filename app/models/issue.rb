@@ -6,7 +6,7 @@ class Issue < ApplicationRecord
     has_many :comments
     has_many :attachments
     has_and_belongs_to_many :watchers, class_name: 'User'
-    has_many :votes, dependent: :destroy
+    has_many :votos, dependent: :destroy
     
     scope :status, -> (status) { where(status: status) if status.present? }
     scope :priority, -> (priority) { where(priority: priority) if priority.present? }

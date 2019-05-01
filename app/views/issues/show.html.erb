@@ -32,8 +32,8 @@
         </p>
         <p>
           <strong>Votes:</strong>
-          <%= @issue.votes.size %>
-          <% if Vote.where(:user_id => current_user.id, :issue_id => params[:id]).take == nil %>
+          <%= @issue.votos.size %>
+          <% if Voto.where(:user_id => current_user.id, :issue_id => params[:id]).take == nil %>
           <span><%= link_to 'Vote for this issue', vote_url(id: @issue.id),  method: :vote  %></span>
           <% else %>
            <span><%= link_to 'Remove vote', unvote_url(id: @issue.id),  method: :unvote  %></span>
@@ -64,6 +64,7 @@
     <div>
       <span> Issue #<%= @issue.id %> </span>
       <span><%= @issue.status %></span> 
+      <br>
     </div>
     <div class="item">
       <div id="issue_main_content">
@@ -85,8 +86,6 @@
               <%= link_to attachment.file_file_name, attachment.file.url, target: '_blank', class: "attachmentLink" %>
               <%= link_to 'X', attachment, method: :delete, data: { confirm: 'Are you sure?' }, class: "deleteSymbol" %>
             </span>
-            
-            
           <% end %>
         </div>
       </div>
@@ -120,6 +119,7 @@
           <%= f.submit %>
         <% end %>
       </div>
+      <br>
       <div class="add_attachments">
         <h2>Add attachments</h2>
         <%= form_for :attachment, url: "/attachments", method: "post" do |f| %>
@@ -131,6 +131,6 @@
     </div>
   </div>
 </div>
-
+<br><br>
 <%= link_to 'Edit', edit_issue_path(@issue) %> |
 <%= link_to 'Back', issues_path %>

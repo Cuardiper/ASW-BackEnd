@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190409185538) do
+ActiveRecord::Schema.define(version: 20190411085236) do
 
   create_table "attachments", force: :cascade do |t|
     t.string "title"
@@ -70,6 +70,13 @@ ActiveRecord::Schema.define(version: 20190409185538) do
     t.datetime "updated_at", null: false
     t.index ["issue_id"], name: "index_votes_on_issue_id"
     t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
+  create_table "votos", force: :cascade do |t|
+    t.integer "issue_id"
+    t.integer "user_id"
+    t.index ["issue_id"], name: "index_votos_on_issue_id"
+    t.index ["user_id"], name: "index_votos_on_user_id"
   end
 
 end
