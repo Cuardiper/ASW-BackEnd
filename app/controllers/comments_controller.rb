@@ -13,7 +13,16 @@ class CommentsController < ApplicationController
   # GET /comments/1.json
   def show
   end
-
+  
+  # GET /comments/issue/1
+  def getByIssue
+    @comments = Comment.where(issue_id: params[:Issue_id]).take
+    respond_to do |format|
+      format.html { @comments }
+      format.json { render json: @comments.to_json() }
+    end
+  end
+  
   # GET /comments/new
   def new
     @comment = Comment.new
