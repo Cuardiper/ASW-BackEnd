@@ -54,6 +54,11 @@
           <% end %>
         </p>
       </div>
+      
+      <%= link_to '<button class="buttonB" type="button">Edit</button>'.html_safe, edit_issue_path(@issue) %>
+      <span>&nbsp &nbsp &nbsp &nbsp</span>
+      <%= link_to '<button class="buttonB" type="button">Delete</button>'.html_safe, @issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      
   </div>
   <header>
     <h1>
@@ -132,5 +137,4 @@
   </div>
 </div>
 <br><br>
-<%= link_to 'Edit', edit_issue_path(@issue) %> |
-<%= link_to 'Back', issues_path %>
+<%= link_to '<button class="buttonB" type="button">Back</button>'.html_safe, issues_path %>

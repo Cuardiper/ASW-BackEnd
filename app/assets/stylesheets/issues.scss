@@ -42,12 +42,37 @@ margin-right: 10px;
 text-align: middle;
 
 }
+/*
 .hoverTable thead{
   background-color: lightgrey;
 }
 
 .hoverTable tr:hover {
-      background-color: lightgrey;
+      background-color: #e7e7e7;
+}
+*/
+
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: white;}
+
+#customers tr:hover {background-color: #e7e7e7;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #6bb9f0;
+  color: white;
 }
 
 .current {
@@ -73,4 +98,97 @@ text-align: middle;
 .deleteSymbol{
   color:red;
   font-weight: bold;
+}
+
+.buttonC {
+  background-color: #e7e7e7; /* Gray */
+  border: 2px solid black;
+  color: black;
+  padding: 10px 24px;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  
+  position:absolute;
+  transition: .5s ease;
+  top: 16%;
+  left: 88%;
+  font-weight: bold;
+}
+
+.buttonC:hover {
+  background-color: #e7e7e7; /* Gray */
+  border: 2px solid black;
+  color: black;
+  padding: 10px 24px;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  box-shadow: 0 0 0 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
+  position:absolute;
+  transition: .5s ease;
+  top: 16%;
+  left: 88%;
+  font-weight: bold;
+}
+
+.buttonB {
+  background-color: #e7e7e7; /* Gray */
+  border: 2px solid black;
+  color: black;
+  padding: 10px 24px;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.buttonB:hover {
+  background-color: #e7e7e7; /* Gray */
+  border: 2px solid black;
+  color: black;
+  padding: 10px 24px;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 0 0 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
+}
+
+.p {
+  font-variant: small-caps;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.filter {
+  background-color: white; 
+  border: 1px solid #e7e7e7;
+  border-radius: 12px;
+  color: black;
+  padding: 10px 24px;;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.filter:hover {
+  background-color: #e7e7e7; 
+  border: none;
+  border-radius: 12px;
+  color: black;
+  padding: 10px 24px;;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
 }
