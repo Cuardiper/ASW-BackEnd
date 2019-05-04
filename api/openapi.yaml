@@ -164,6 +164,53 @@ paths:
                   $ref: '#/components/schemas/Comment'
       security:
         - api_key: []
+    put:
+      tags:
+        - Comment
+      summary: Edit the comment with id = CommentId
+      operationId: deleteCommentById
+      parameters:
+        - name: CommentId
+          in: path
+          description: ID of Comment to return 
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Updated comment object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      responses:
+        '204':
+          description:  Comment deleted
+          content: {}
+        '400':
+          description: Invalid ID supplied
+          content: {}
+    delete:
+      tags:
+        - Comment
+      summary: Delete the comment with id = CommentId
+      operationId: deleteCommentById
+      parameters:
+        - name: CommentId
+          in: path
+          description: ID of Comment to return 
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description:  Comment deleted
+          content: {}
+        '400':
+          description: Invalid ID supplied
+          content: {}
   '/comments/issue/{IssueId}':
     get:
       tags:
@@ -189,7 +236,29 @@ paths:
                   $ref: '#/components/schemas/Comment'
       security:
         - api_key: []
-        
+    post:
+      tags:
+        - Comment
+      summary: Create a new comment on the issue with id = IssueId
+      operationId: postCommentByIssueId
+      parameters:
+        - name: IssueId
+          in: path
+          description: ID of the issue to which the comment belongs
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          description: OK
+      security:
+        - api_key: []
   /pet/findByTags:
     get:
       tags:
@@ -760,22 +829,27 @@ components:
         id:
           type: integer
           format: int64
-        username:
-          type: string
-        firstName:
-          type: string
-        lastName:
+        name:
           type: string
         email:
           type: string
-        password:
+        provider:
           type: string
-        phone:
+        uid:
           type: string
-        userStatus:
-          type: integer
-          description: User Status
-          format: int32
+        oauth_token:
+          type: string
+        oauth_expires_at:
+          type: string
+          format: date-time
+        foto:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
       xml:
         name: User
     Tag:

@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   include SessionsHelper
-  before_action :logged_in_user
+  #before_action :logged_in_user
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   # GET /comments
@@ -47,6 +47,13 @@ class CommentsController < ApplicationController
       end
     end
   end
+  
+  def postOnIssue
+    @id = params[:issue_id]
+    @comments = Comment.where(issue_id: @id).take
+    render json: @comments.to_json()
+  end
+  
 
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json

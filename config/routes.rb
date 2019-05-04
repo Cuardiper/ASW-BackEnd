@@ -24,5 +24,8 @@ Rails.application.routes.draw do
   root to: "home#show"
   
   get '/comments/issue/:Issue_id' => "comments#getByIssue", as: :getByIssue
+  #post '/comments/issue/Issue_id' => "comments#postOnIssue", as: :postOnIssue
+  #delete '/comments/:comment_id' => "comments#destroy", as: :destroy
+  
 end 
 
