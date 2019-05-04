@@ -22,5 +22,7 @@ Rails.application.routes.draw do
   
   #root 'issues#index'
   root to: "home#show"
+  
+  get '/comments/issue/:Issue_id' => "comments#getByIssue", as: :getByIssue
 end 
 
