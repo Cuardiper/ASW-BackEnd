@@ -1,6 +1,6 @@
 class IssuesController < ApplicationController
   include SessionsHelper
-  #before_action :logged_in_user
+  before_action :logged_in_user
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
   
   helper_method :sort_column, :sort_direction
