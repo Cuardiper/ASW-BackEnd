@@ -4,9 +4,7 @@
   <div class="sidebar">
       <div class="issue_toolbar">
         <%= form_with(model: @issue, local: true) do |form| %>
-          <%= form.label :status %>
-          <%= form.select :status, ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed']%>
-          <%= form.submit %>
+          <%= form.select :status, ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed'], {}, { value: @issue.status, class: 'form-control', onchange: 'this.form.submit();' } %>
         <% end %>
       </div>
       <div class="sidebar_info">
