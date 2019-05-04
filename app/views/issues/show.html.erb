@@ -99,7 +99,7 @@
                 <span><%= User.all.find(comment.reporter_id).name %></span>  
               </a>
             </div>
-            <p><%= comment.text %></p>
+            <p><%= raw(comment.text) %></p>
             <div>
               <p class="comment_toolbar">
                 <% if current_user.id == comment.reporter_id %>

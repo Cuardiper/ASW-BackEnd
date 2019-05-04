@@ -76,6 +76,28 @@ class IssuesController < ApplicationController
   # PATCH/PUT /issues/1
   # PATCH/PUT /issues/1.json
   def update
+    comment_text = ""
+    if (issue_params[:status].present? and issue_params[:status] != @issue.status) 
+      comment_text +="changed status to " + issue_params[:status] + "<br>"
+    end
+    if (issue_params[:title].present? and issue_params[:title] != @issue.title) 
+      comment_text = comment_text + "changed title to " + issue_params[:title] + "<br>"
+    end
+    if (issue_params[:type_issue].present? and issue_params[:type_issue] != @issue.type_issue)
+      comment_text = comment_text + "marked as " + issue_params[:type_issue] + "<br>"
+    end
+    if (issue_params[:priority].present? and issue_params[:priority] != @issue.priority)
+      comment_text = comment_text + "marked as " + issue_params[:priority] + "<br>"
+    end
+    if (issue_params[:assignee_id].present? and issue_params[:assignee_id] != @issue.assignee_id)
+      comment_text = comment_text + "assigned issue to " + User.find(issue_params[:assignee_id]).name + "<br>"
+    end
+    if (issue_params[:description].present? and issue_params[:description] != @issue.description) 
+      comment_text = comment_text + "edited description" + "<br>"
+    end
+    if (comment_text != "")
+      Comment.create(:text => comment_text, :reporter_id => current_user.id, :issue_id => @issue.id)
+    end
     respond_to do |format|
       if @issue.update(issue_params)
         format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
