@@ -13,6 +13,12 @@ class Api::V1::IssuesController < ApplicationController
     json_response(@issue)
   end
   
+  # POST /todos
+  def create
+    @issue = Issue.create!(issue_params)
+    json_response(@issue, :created)
+  end
+  
   # PUT/PATCH /issues/1
   def update
     @issue.update(issue_params)
