@@ -37,18 +37,12 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @user_aux = authenticate
-    if(@user_aux.nil?)
-      respond_to do |format|
-      format.json {render json: { 
-       meta: {code: 401, error_message: "Unauthorized"}
-      }}
-    end
-    else
+
       request_parameters = JSON.parse(request.body.read.to_s)
       text = request_parameters["text"]
       issueID = request_parameters["issue_id"]
       @comment = Comment.create(text: text, reporter_id: @user_aux.id, issue_id: issueID)
-    end
+
 
     respond_to do |format|
       if @comment.save
