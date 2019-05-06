@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-  <div class="formulario">
+  
     <div class="field">
       <%= form.label :title %>
       <%= form.text_field  :title, id: :issue_title, class: "ampliar" %>
@@ -52,6 +52,8 @@
   
     <div class="actions">
       <%= form.submit %>
+      <span>&nbsp &nbsp &nbsp &nbsp</span>
+      <%= link_to '<button class="buttonB" type="button">Back</button>'.html_safe, issues_path %>
     </div>
-  </div>
+
 <% end %>
