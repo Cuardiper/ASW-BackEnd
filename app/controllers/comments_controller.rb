@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
   
   # GET /comments/issue/1
   def getByIssue
-    @comments = Comment.all.where(issue_id: params[:Issue_id]).take
+    @comments = Comment.all.where(issue_id: params[:Issue_id])
     respond_to do |format|
       format.html { @comments }
       format.json { render json: @comments.to_json() }
