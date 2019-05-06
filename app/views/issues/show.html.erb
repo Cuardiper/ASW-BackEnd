@@ -4,9 +4,7 @@
   <div class="sidebar">
       <div class="issue_toolbar">
         <%= form_with(model: @issue, local: true) do |form| %>
-          <%= form.label :status %>
-          <%= form.select :status, ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed']%>
-          <%= form.submit %>
+          <%= form.select :status, ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed'], {}, { value: @issue.status, class: 'form-control', onchange: 'this.form.submit();' } %>
         <% end %>
       </div>
       <div class="sidebar_info">
@@ -54,6 +52,11 @@
           <% end %>
         </p>
       </div>
+      
+      <%= link_to '<button class="buttonB" type="button">Edit</button>'.html_safe, edit_issue_path(@issue) %>
+      <span>&nbsp &nbsp &nbsp &nbsp</span>
+      <%= link_to '<button class="buttonB" type="button">Delete</button>'.html_safe, @issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      
   </div>
   <header>
     <h1>
@@ -99,7 +102,7 @@
                 <span><%= User.all.find(comment.reporter_id).name %></span>  
               </a>
             </div>
-            <p><%= comment.text %></p>
+            <p><%= raw(comment.text) %></p>
             <div>
               <p class="comment_toolbar">
                 <% if current_user.id == comment.reporter_id %>
@@ -132,5 +135,4 @@
   </div>
 </div>
 <br><br>
-<%= link_to 'Edit', edit_issue_path(@issue) %> |
-<%= link_to 'Back', issues_path %>
+<%= link_to '<button class="buttonB" type="button">Back</button>'.html_safe, issues_path %>

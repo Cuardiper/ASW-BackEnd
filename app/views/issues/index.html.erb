@@ -2,30 +2,32 @@
 
 <h1>Issues</h1>
 
-<p>Filter by: &nbsp <%= link_to 'All', issues_path %> &nbsp <%= link_to 'Unresolved', issues_path(:status => ['new','open']) %>
-&nbsp <%= link_to 'My Issues', issues_path(:assignee_id => [ current_user.id ]) %>  &nbsp <%= link_to 'Watching', issues_url(watcher: current_user.id) %> </p>
+<p class="p" >Filter by: &nbsp <%= link_to '<button class="filter" type="button">All</button>'.html_safe, issues_path %> 
+&nbsp <%= link_to '<button class="filter" type="button">Unresolved</button>'.html_safe, issues_path(:status => ['new','open']) %>
+&nbsp <%= link_to '<button class="filter" type="button">My Issues</button>'.html_safe, issues_path(:assignee_id => [ current_user.id ]) %>  
+&nbsp <%= link_to '<button class="filter" type="button">Watching</button>'.html_safe, issues_url(watcher: current_user.id) %> </p>
 
 <% if $t != "" %>
-  <p> Type: <%= $t %> </p>
+  <span> <b> Type:</b> <%= $t %> </span>
 <% end %>
 
 <% if $pi != "" %>
-  <p> Priority: <%= $pi %> </p>
+  <span><b> Priority:</b> <%= $pi %> </span> 
 <% end %>
 
 <% if $s != "" and $s.length != 2 %>
-  <p> Status: <%= $s %> </p>
+  <span><b> Status:</b> <%= $s %> </span>
 <% end %>
 
 <% if $s != "" and $s.length == 2 %>
-  <p> Status: <%= $s[0] %>, <%= $s[1] %> </p>
+  <span><b> Status:</b> <%= $s[0] %>, <%= $s[1] %> </span>
 <% end %>
 
 <% if $a != "" %>
-  <p> Assignee: <%= User.all.find($a).name %> </p>
+  <span style="margin-bottom: 10px"><b> Assignee:</b> <%= User.all.find($a).name %> </span>
 <% end %>
 
-<table class="hoverTable">
+<table class="hoverTable" id="customers" >
   <thead class = hoverTableHeader>
     <tr>
       <th><%= sortable "id", "Title" %></th>
@@ -85,7 +87,7 @@
         <td><%= link_to issue.status, issues_path(:type_issue => [$t], :priority => [$pi], :status => [issue.status], :assignee_id => [$a]) %></td>
         <td><%= issue.votos.size %></td>
         <% if issue.assignee_id != nil %>
-          <td><%= link_to image_tag(User.all.find(issue.assignee_id).foto, width: 20, height: 20,class: 'img-circle'), issues_path(:type_issue => [$t], :priority => [$pi], :status => [$s], :assignee_id => [issue.assignee_id]) %><%= User.all.find(issue.assignee_id).name %></td>
+          <td><%= link_to image_tag(User.all.find(issue.assignee_id).foto, width: 20, height: 20,class: 'img-circle'), issues_path(:type_issue => [$t], :priority => [$pi], :status => [$s], :assignee_id => [issue.assignee_id])%><%= User.all.find(issue.assignee_id).name %></td>
         <% else %>
            <td></td>
         <% end %>
@@ -96,7 +98,7 @@
         <% else %>
            <td><%= link_to image_tag('not-watching.svg', width: 20, height: 20), watch_url(id: issue.id),  method: :watch  %></td>
         <% end %>
-        <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <!-- <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
       </tr>
     <% end %>
   </tbody>
@@ -104,4 +106,4 @@
 
 <br>
 
-<%= link_to 'New Issue', new_issue_path %>
+<%= link_to '<button class="buttonC" type="button">Create Issue</button>'.html_safe, new_issue_path %>

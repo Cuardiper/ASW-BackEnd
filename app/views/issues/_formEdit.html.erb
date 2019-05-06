@@ -21,8 +21,10 @@
     <%= form.text_area :description, id: :issue_description %>
   </div>
 
-  <div>
+  <div class="field">
     <p> Creator </p>
+  </div>
+  <div>
     <a href="/users/<%= issue.creator_id %>">
       <%= image_tag( User.all.find(issue.creator_id).foto, width: 25, height: 25, class: 'img-circle') %>
       <span><%= User.all.find(issue.creator_id).name %></span>
@@ -48,5 +50,8 @@
 
   <div class="actions">
     <%= form.submit %>
+    <span>&nbsp &nbsp &nbsp &nbsp</span>
+    <%= link_to '<button class="buttonB" type="button">Back</button>'.html_safe, issues_path %>
   </div>
+
 <% end %>
