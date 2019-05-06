@@ -25,6 +25,7 @@ class IssuesController < ApplicationController
     if params[:assignee_id].present?
       $a = params[:assignee_id].join
     end
+    
     if (not params[:assignee_id].present?) and (not params[:type_issue].present?) and (not params[:priority].present?) and (not params[:status].present?)
       $s = ""
       $pi = ""
@@ -32,6 +33,9 @@ class IssuesController < ApplicationController
       $a = ""
     end
     if params[:status].present? and params[:status].length == 2
+      $s = "new","open"
+    end
+    if params[:status].present? and params[:status].length != 2 and params[:status].join == "unresolved"
       $s = "new","open"
     end
     
