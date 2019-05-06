@@ -91,4 +91,9 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:text, :issue_id, :reporter_id)
     end
+    
+    def apiGetComment
+      @comments = Comment.where(issue_id: params[:Issue_id]).take
+      render json: @comments.to_json()
+    end
 end

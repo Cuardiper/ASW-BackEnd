@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   
   get '/comments/issue/:Issue_id' => "comments#getByIssue", as: :getByIssue
   #post '/comments/issue/Issue_id' => "comments#postOnIssue", as: :postOnIssue
-  #delete '/comments/:comment_id' => "comments#destroy", as: :destroy
+  put 'api/comments/:comment_id' => "comments#apiGetComment", as: :apiGetComment
   
 end 
 
