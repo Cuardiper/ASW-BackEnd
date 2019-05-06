@@ -192,6 +192,21 @@ paths:
                   $ref: '#/components/schemas/Comment'
       security:
         - api_key: []
+    post:
+      tags:
+        - Comment
+      summary: Create a new comment
+      operationId: postCommentByIssueId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          description: OK
+      security:
+        - api_key: []
   '/comments/{CommentId}':
     get:
       tags:
@@ -285,29 +300,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Comment'
-      security:
-        - api_key: []
-    post:
-      tags:
-        - Comment
-      summary: Create a new comment on the issue with id = IssueId
-      operationId: postCommentByIssueId
-      parameters:
-        - name: IssueId
-          in: path
-          description: ID of the issue to which the comment belongs
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Comment'
-      responses:
-        '200':
-          description: OK
       security:
         - api_key: []
   '/users/{UserId}':
@@ -541,5 +533,5 @@ components:
             'read:pets': read your pets
     api_key:
       type: apiKey
-      name: api_key
+      name: token
       in: header
