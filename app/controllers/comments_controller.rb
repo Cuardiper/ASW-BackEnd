@@ -93,7 +93,7 @@ class CommentsController < ApplicationController
     end
     
     def apiGetComment
-      @comments = Comment.where(issue_id: params[:Issue_id]).take
+      @comments = Comment.find(params[:comment_id])
       render json: @comments.to_json()
     end
 end
