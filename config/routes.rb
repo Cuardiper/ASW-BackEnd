@@ -24,8 +24,7 @@ Rails.application.routes.draw do
   root to: "home#show"
   
   get '/comments/issue/:Issue_id' => "comments#getByIssue", as: :getByIssue
-  #post '/comments/issue/Issue_id' => "comments#postOnIssue", as: :postOnIssue
-  put '/api/comments/:comment_id' => "comments#apiGetComment", as: :apiGetComment
+  get '/api/comments/:comment_id' => "comments#apiGetComment", as: :apiGetComment
   
 end 
 
