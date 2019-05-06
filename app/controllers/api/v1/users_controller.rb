@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_todo, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users
   def index
@@ -14,23 +14,23 @@ class Api::V1::UsersController < ApplicationController
   
   # PUT/PATCH /users/1
   def update
-    @user.update(todo_params)
+    @user.update(user_params)
     head :no_content
   end
   
   def destroy
-    @todo.destroy
+    @user.destroy
     head :no_content
   end
   
   private
 
-  def todo_params
+  def user_params
     # whitelist params
     params.permit(:title, :created_by)
   end
 
-  def set_todo
+  def set_user
     @user = User.find(params[:id])
   end
   
