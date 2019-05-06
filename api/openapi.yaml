@@ -150,9 +150,10 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Issue'
+                $ref: '#/components/schemas/Issue'
+        '404':
+          description: Not Found
+          content: {}  
       security:
         - api_key: []
 
@@ -237,20 +238,18 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Comment'
+                $ref: '#/components/schemas/Comment'
       security:
         - api_key: []
     put:
       tags:
         - Comment
       summary: Edit the comment with id = CommentId
-      operationId: deleteCommentById
+      operationId: editCommentById
       parameters:
         - name: CommentId
           in: path
-          description: ID of Comment to return 
+          description: ID of Comment to edit 
           required: true
           schema:
             type: integer
