@@ -68,6 +68,51 @@ paths:
               - assignee_id
               - created_at
               - updated_at
+        - name: priority[]
+          in: query
+          description: Priority filter
+          required: false
+          schema:
+            type: string
+            enum:
+              - trivial
+              - minor
+              - major
+              - critical
+              - blocker
+        - name: status[]
+          in: query
+          description: Status filter
+          required: false
+          schema:
+            type: string
+            enum:
+              - new
+              - open
+              - on hold
+              - resolved
+              - duplicate
+              - invalid
+              - wontfix
+              - closed
+        - name: type_issue[]
+          in: query
+          description: Type filter
+          required: false
+          schema:
+            type: string
+            enum:
+              - bug
+              - enhancement
+              - task
+              - proposal
+        - name: assignee_id[]
+          in: query
+          description: Assignee filter
+          required: false
+          schema:
+            type: integer
+            format: int64
       responses:
         '200':
           description: successful operation
@@ -77,6 +122,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Issue'
+        '204':
+          description: No Content
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}  
       security:
         - api_key: []
   '/issues/{IssueId}':
