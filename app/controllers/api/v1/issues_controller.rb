@@ -34,7 +34,7 @@ class Api::V1::IssuesController < ApplicationController
 
   def issue_params
     # whitelist params
-    params.permit(:description, :status)
+    params.permit(:title, :description, :type_issue, :priority, :creator_id)
   end
 
   def set_issue
