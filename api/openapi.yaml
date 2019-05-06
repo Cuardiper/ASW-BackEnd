@@ -95,6 +95,7 @@ paths:
               - invalid
               - wontfix
               - closed
+              - unresolved
         - name: type_issue[]
           in: query
           description: Type filter
@@ -154,6 +155,29 @@ paths:
         '404':
           description: Not Found
           content: {}  
+      security:
+        - api_key: []
+        
+    delete:
+      tags:
+        - Issue
+      summary: Deletes an issue
+      operationId: deleteIssue
+      parameters:
+        - name: IssueId
+          in: path
+          description: Issue id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+          content: {}
+        '404':
+          description: Issue not found
+          content: {}
       security:
         - api_key: []
 
