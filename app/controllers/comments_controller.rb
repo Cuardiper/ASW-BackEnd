@@ -37,7 +37,6 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = Comment.new(comment_params)
-    
     respond_to do |format|
       if @comment.save
         format.html { redirect_back fallback_location: "/issues", notice: 'Comment was successfully created.' }
@@ -59,21 +58,23 @@ class CommentsController < ApplicationController
       }}
     end
     else
-      request_parameters = JSON.parse(request.body.read.to_s)
-      text = request_parameters["text"]
-      issueID = request_parameters["issue_id"]
-      @comment = Comment.create(text: text, reporter_id: @user_aux.id, issue_id: @idIssue)
-      
-      respond_to do |format|
+    request_parameters = JSON.parse(request.body.read.to_s)
+    text = request_parameters["text"]
+    issueID = request_parameters["issue_id"]
+    @comment = Comment.create(text: text, reporter_id: @user_aux.id, issue_id: issueID)
+    end
+    
+    respond_to do |format|
       if @comment.save
         format.html { redirect_back fallback_location: "/issues", notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
-        format.html { render :new }git
+        format.html { render :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
-
+    
+  end
   
 
   # PATCH/PUT /comments/1
