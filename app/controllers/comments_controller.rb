@@ -61,7 +61,7 @@ class CommentsController < ApplicationController
     request_parameters = JSON.parse(request.body.read.to_s)
     text = request_parameters["text"]
     issueID = request_parameters["issue_id"]
-    @comment = Comment.create(text: text, reporter_id: @user_aux.id, issue_id: issueID)
+    @comment = Comment.create(text: text, reporter_id: @user_aux.id, issue_id: idIssue)
     end
     
     respond_to do |format|
