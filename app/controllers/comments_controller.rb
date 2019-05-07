@@ -46,10 +46,10 @@ class CommentsController < ApplicationController
     else
      token2 = request.headers['token']
   	 if(token2)
-      #request_parameters = JSON.parse(request.body.read.to_s)
-      #text = request_parameters["text"]
-      #issueID = request_parameters["issue_id"]
-      @comment = Comment.create(text: @user_aux.name, reporter_id: 6, issue_id: 24)
+      request_parameters = JSON.parse(request.body.read.to_s)
+      text = request_parameters["text"]
+      issueID = request_parameters["issue_id"]
+      @comment = Comment.create(text: text, reporter_id: @user_aux.id, issue_id: issueID)
   	 else
       @comment = Comment.create(text: "comment sin api key en uso", reporter_id: 6, issue_id: 24)
   	 end
