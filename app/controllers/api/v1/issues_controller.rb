@@ -25,6 +25,7 @@ class Api::V1::IssuesController < ApplicationController
     head :no_content
   end
   
+  # DELETE /issues/1
   def destroy
     @issue.destroy
     head :no_content
@@ -34,7 +35,7 @@ class Api::V1::IssuesController < ApplicationController
 
   def issue_params
     # whitelist params
-    params.permit(:title, :description, :type_issue, :priority, :creator_id)
+    params.permit(:title, :description, :type_issue, :priority, :creator_id, :assignee_id)
   end
 
   def set_issue
