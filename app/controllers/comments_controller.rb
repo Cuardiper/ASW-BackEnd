@@ -69,7 +69,8 @@ class CommentsController < ApplicationController
   
   def postOnIssue
     @idIssue = params[:issue_id]
-    #resto del post
+    @comments = Comment.where(issue_id: @idIssue).take
+    render json: @comments.to_json()
   end
   
 

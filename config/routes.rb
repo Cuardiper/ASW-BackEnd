@@ -23,8 +23,9 @@ Rails.application.routes.draw do
   root to: "home#show"
   
   
-  get '/comments/issue/:Issue_id' => "comments#getByIssue", as: :getByIssue
-  get '/attachments/issue/:Issue_id' => "attachments#findByIssue", as: :findByIssue
+  get '/issues/:Issue_id/comments' => "comments#getByIssue", as: :getByIssue
+  post '/issues/:Issue_id/comments' => "comments#postOnIssue", as: :postOnIssue
+  get '/issues/:Issue_id/attachments' => "attachments#findByIssue", as: :findByIssue
   
   namespace :api, defaults: { format: "json" } do
     namespace :v1 do
