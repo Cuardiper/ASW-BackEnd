@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   def authenticate
   	token2 = request.headers['token']
   	if(token2)
-  	  @user = User.where(oauth_token: token).first
+  	  @user = User.where(oauth_token: token2).first
   	else
   	  @user = current_user
   	end
