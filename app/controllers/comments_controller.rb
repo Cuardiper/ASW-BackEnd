@@ -50,7 +50,7 @@ class CommentsController < ApplicationController
   end
   
   def postOnIssue
-    @idIssue = params[:issue_id]
+    @idIssue = params[:Issue_id]
     @user_aux = authenticate
     if(@user_aux.nil?)
       respond_to do |format|
@@ -69,12 +69,11 @@ class CommentsController < ApplicationController
         format.html { redirect_back fallback_location: "/issues", notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
-        format.html { render :new }
+        format.html { render :new }git
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
-    
-  end
+
   
 
   # PATCH/PUT /comments/1
