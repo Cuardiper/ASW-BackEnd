@@ -12,6 +12,10 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json {render json: @user, status: :ok, serializer: UserSerializer}
+    end
   end
 
   # GET /users/new
