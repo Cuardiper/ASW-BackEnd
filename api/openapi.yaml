@@ -483,23 +483,12 @@ components:
           type: string
         email:
           type: string
-        provider:
-          type: string
-        uid:
-          type: string
-        oauth_token:
-          type: string
-        oauth_expires_at:
-          type: string
-          format: date-time
         foto:
           type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/Issue'
       xml:
         name: User
     Tag:

@@ -1,10 +1,3 @@
-class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :foto, :issues
-  def issues
-     Issue.where(creator_id: object.id)
-  end
-end
-
 class UsersController < ApplicationController
   include SessionsHelper
   #before_action :logged_in_user
