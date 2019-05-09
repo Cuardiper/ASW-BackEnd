@@ -84,7 +84,7 @@ class CommentsController < ApplicationController
       if(@user_aux.nil?)
         render json: { meta: {code: 401, error_message: "Unauthorized"}}
       else
-        
+          
           request_parameters = JSON.parse(request.body.read.to_s)
           text = request_parameters["text"]
           @comment = Comment.update(text: text)
@@ -125,6 +125,8 @@ class CommentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       @comment = Comment.find(params[:id])
+      puts("el reporter")
+      puts(@comment.reporter_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
