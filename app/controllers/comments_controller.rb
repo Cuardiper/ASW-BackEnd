@@ -92,6 +92,11 @@ class CommentsController < ApplicationController
             else
               render json: @comment.errors, status: :unprocessable_entity
             end
+          else
+            render json: {
+              error: "Only the reporter can edit the comment",
+              status: 401
+            }, status: 400
           end
       end
     else #no venimos de api
