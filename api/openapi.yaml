@@ -422,7 +422,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Comment'
+                  $ref: '#/components/schemas/User'
           links:
             self:
               description: >
