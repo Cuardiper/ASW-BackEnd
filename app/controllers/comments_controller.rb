@@ -87,8 +87,11 @@ class CommentsController < ApplicationController
         
           request_parameters = JSON.parse(request.body.read.to_s)
           text = request_parameters["text"]
-          @comment = Comment.update(text: text)
+          if @comment.update(text: text)
           render json: @comment, status: :updated
+          else
+            render json: @comment.errors, status: :unprocessable_entity
+          end
 
       end
     else #no venimos de api
