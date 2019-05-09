@@ -231,14 +231,17 @@ paths:
       requestBody:
         description: Updated comment object
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/Comment'
         required: true
       responses:
         '204':
           description:  Comment deleted
-          content: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
         '400':
           description: Invalid ID supplied
           content: {}
