@@ -74,7 +74,6 @@ class CommentsController < ApplicationController
     end
     
   end
-  
 
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
