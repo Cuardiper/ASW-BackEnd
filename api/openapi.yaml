@@ -147,6 +147,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Issue'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `/issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/id'  
+            creator:
+              description: >
+                The `creator_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/creator_id'
+            assignee:
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/assignee_id'
+              description: >
+                The `assignee_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+            comments:
+              operationId: getCommentByIssueId
+              parameters: 
+                IssueId: '$response.body#/id'
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}/comments`.
         '404':
           description: Not Found
           content: {}  
@@ -373,7 +398,6 @@ paths:
 
 components:
   schemas:
-    
     Issue:
       type: object
       properties:
@@ -487,12 +511,13 @@ components:
         updated_at:
           type: string
           format: date-time
-
       xml:
         name: Issue
     User:
       type: object
       properties:
+        oauth_token:
+          type: string
         id:
           type: integer
           format: int64
@@ -502,10 +527,6 @@ components:
           type: string
         foto:
           type: string
-        issues:
-          type: array
-          items:
-            $ref: '#/components/schemas/Issue'
       xml:
         name: User
     Tag:

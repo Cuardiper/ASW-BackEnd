@@ -5,8 +5,8 @@ class IssueSerializer < ActiveModel::Serializer
     if object.assignee_id != nil
       links = {
         self: { href: "/issues/#{object.id}" },
-        creator: {  id: object.creator_id, name: User.find(object.creator_id).name, href: "/users/#{object.creator_id}"},
-        assignee: {  id: object.assignee_id, name: User.find(object.assignee_id).name, href: "/users/#{object.assignee_id}"},
+        creator: { href: "/users/#{object.creator_id}"},
+        assignee: { href: "/users/#{object.assignee_id}"},
         comments: { href: "/issues/#{object.id}/comments"}
       }
     else

@@ -8,11 +8,19 @@ class CommentsController < ApplicationController
   # GET /comments.json
   def index
     @comments = Comment.all
+    respond_to do |format|
+      format.html
+      format.json {render json: @comments, status: :ok, each_serializer: CommentSerializer}
+    end
   end
 
   # GET /comments/1
   # GET /comments/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json {render json: @comment, status: :ok, serializer: CommentSerializer}
+    end
   end
   
   # GET /comments/issue/1
