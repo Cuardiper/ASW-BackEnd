@@ -78,8 +78,28 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-    id_isue = @comment.issue_id.to_s
-    respond_to do |format|
+    token2 = request.headers['token']
+    if(token2)
+      @user_aux = authenticate
+      if(@user_aux.nil?)
+        render json: { meta: {code: 401, error_message: "Unauthorized"}}
+      else
+        if @comment.reporter_id == @user_aux.id
+          request_parameters = JSON.parse(request.body.read.to_s)
+          text = request_parameters["text"]
+          @comment = Comment.update(text: text)
+          if @comment.save
+            render json: @comment, status: :updated
+          else
+            render json: @comment.errors, status: :unprocessable_entity
+          end
+        else
+          render json: { meta: {code: 401, error_message: "User is not the creator"}}
+        end
+      end
+    else #no venimos de api
+      id_isue = @comment.issue_id.to_s
+      respond_to do |format|
       if @comment.update(comment_params)
         format.html { redirect_to "/issues/" + id_isue, notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
@@ -87,8 +107,10 @@ class CommentsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
+      end
     end
   end
+    
 
   # DELETE /comments/1
   # DELETE /comments/1.json
