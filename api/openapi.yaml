@@ -118,6 +118,31 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Issue'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/id'  
+            creator:
+              description: >
+                The `creator_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/creator_id'
+            assignee:
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/assignee_id'
+              description: >
+                The `assignee_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+            comments:
+              operationId: getCommentByIssueId
+              parameters: 
+                IssueId: '$response.body#/id'
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}/comments`.
         '204':
           description: No Content
           content: {}
@@ -150,7 +175,7 @@ paths:
           links:
             self:
               description: >
-                The `id` value returned in the response can be used as the `IssueId` parameter in `/issues/{IssueId}`.
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
               operationId: getIssuesById
               parameters: 
                 IssueId: '$response.body#/id'  
@@ -215,6 +240,25 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Comment'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `CommentId` parameter in `GET /comments/{CommentId}`.
+              operationId: getCommentById
+              parameters: 
+                CommentId: '$response.body#/id'  
+            reporter:
+              description: >
+                The `reporter_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/reporter_id'
+            issue:
+              description: >
+                The `issue_id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/issue_id' 
       security:
         - api_key: []
   '/comments/{CommentId}':
@@ -238,6 +282,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Comment'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `CommentId` parameter in `GET /comments/{CommentId}`.
+              operationId: getCommentById
+              parameters: 
+                CommentId: '$response.body#/id'  
+            reporter:
+              description: >
+                The `reporter_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/reporter_id'
+            issue:
+              description: >
+                The `issue_id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/issue_id'
       security:
         - api_key: []
     put:
@@ -344,6 +407,29 @@ paths:
                   $ref: '#/components/schemas/Comment'
       security:
         - api_key: []
+        
+  /users:
+    get:
+      tags:
+        - User
+      summary: Returns all the users
+      operationId: getUsers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/reporter_id'  
   '/users/{UserId}':
     get:
       tags:
@@ -365,6 +451,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/reporter_id'
         '400':
           description: Invalid username supplied
           content: {}

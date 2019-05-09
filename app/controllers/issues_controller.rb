@@ -12,39 +12,43 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
   def index
-    @issues = Issue.all.order(sort_column + " " + sort_direction)
-    if params[:status].present? and params[:status].length != 2
-      $s = params[:status].join
-    end
-    if params[:priority].present?
-      $pi = params[:priority].join
-    end
-    if params[:type_issue].present?
-      $t = params[:type_issue].join
-    end 
-    if params[:assignee_id].present?
-      $a = params[:assignee_id].join
-    end
+    respond_to do |format|
+      @issues = Issue.all.order(sort_column + " " + sort_direction)
+      if params[:status].present? and params[:status].length != 2
+        $s = params[:status].join
+      end
+      if params[:priority].present?
+        $pi = params[:priority].join
+      end
+      if params[:type_issue].present?
+        $t = params[:type_issue].join
+      end 
+      if params[:assignee_id].present?
+        $a = params[:assignee_id].join
+      end
+      
+      if (not params[:assignee_id].present?) and (not params[:type_issue].present?) and (not params[:priority].present?) and (not params[:status].present?)
+        $s = ""
+        $pi = ""
+        $t = ""
+        $a = ""
+      end
+      if params[:status].present? and params[:status].length == 2
+        $s = "new","open"
+      end
+      if params[:status].present? and params[:status].length != 2 and params[:status].join == "unresolved"
+        $s = "new","open"
+      end
+      
+      
+      @issues = @issues.status($s).priority($pi).type_issue($t).assignee_id($a)
+      if params.has_key?(:watcher)
+        @issues = User.find(params[:watcher]).watched
+      end
     
-    if (not params[:assignee_id].present?) and (not params[:type_issue].present?) and (not params[:priority].present?) and (not params[:status].present?)
-      $s = ""
-      $pi = ""
-      $t = ""
-      $a = ""
+      format.html
+      format.json {render json: @issues, status: :ok, each_serializer: IssueSerializer}
     end
-    if params[:status].present? and params[:status].length == 2
-      $s = "new","open"
-    end
-    if params[:status].present? and params[:status].length != 2 and params[:status].join == "unresolved"
-      $s = "new","open"
-    end
-    
-    
-    @issues = @issues.status($s).priority($pi).type_issue($t).assignee_id($a)
-    if params.has_key?(:watcher)
-      @issues = User.find(params[:watcher]).watched
-    end
-    
   end
 
   # GET /issues/1

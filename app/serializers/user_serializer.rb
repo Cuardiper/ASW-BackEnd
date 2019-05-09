@@ -1,6 +1,11 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :oauth_token, :id, :name, :email, :foto #, :issues
+  attributes :oauth_token, :id, :name, :email, :foto, :_links#, :issues
   
+  def _links
+    links = {
+      self: { href: "/users/#{object.id}" },
+    }
+  end
   #def issues
   #  Issue.where(creator_id: object.id)
   #end
