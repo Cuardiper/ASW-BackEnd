@@ -84,7 +84,7 @@ class CommentsController < ApplicationController
       if(@user_aux.nil?)
         render json: { meta: {code: 401, error_message: "Unauthorized"}}
       else
-        if @comment.reporter_id == @user_aux.id
+        
           request_parameters = JSON.parse(request.body.read.to_s)
           text = request_parameters["text"]
           @comment = Comment.update(text: text)
@@ -93,9 +93,7 @@ class CommentsController < ApplicationController
           else
             render json: @comment.errors, status: :unprocessable_entity
           end
-        else
-          render json: { meta: {code: 401, error_message: "User is not the creator"}}
-        end
+
       end
     else #no venimos de api
       id_isue = @comment.issue_id.to_s
