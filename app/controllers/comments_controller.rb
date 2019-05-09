@@ -84,6 +84,7 @@ class CommentsController < ApplicationController
       if(@user_aux.nil?)
         render json: { meta: {code: 401, error_message: "Unauthorized"}}
       else
+<<<<<<< HEAD
           
           request_parameters = JSON.parse(request.body.read.to_s)
           text = request_parameters["text"]
@@ -91,8 +92,17 @@ class CommentsController < ApplicationController
           render json: @comment, status: :updated
           else
             render json: @comment.errors, status: :unprocessable_entity
+=======
+          if @comment.reporter_id == @user_aux.id
+            request_parameters = JSON.parse(request.body.read.to_s)
+            text = request_parameters["text"]
+            if @comment.update(text: text)
+            render json: @comment, status: :updated
+            else
+              render json: @comment.errors, status: :unprocessable_entity
+            end
+>>>>>>> e1a367b5675ac85c88dc634a537c1c5a80a0bc5f
           end
-
       end
     else #no venimos de api
       id_isue = @comment.issue_id.to_s
