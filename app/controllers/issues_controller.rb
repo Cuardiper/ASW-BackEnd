@@ -144,16 +144,14 @@ class IssuesController < ApplicationController
       end
       else
         @issue.watchers << User.find(user_aux.id)
-        respond_to do |format|
-          format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
-        end
       end
     else
       @issue = Issue.find(params[:id])
       @issue.watchers << User.find(current_user.id)
-      respond_to do |format|
+    end
+    respond_to do |format|
         format.html { redirect_back fallback_location: "/issues", notice: "You are now watching issue #" + @issue.id.to_s }
-      end
+        format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
     end
   end
   
