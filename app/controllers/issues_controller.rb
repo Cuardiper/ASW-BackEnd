@@ -144,7 +144,9 @@ class IssuesController < ApplicationController
       end
       else
         @issue.watchers << User.find(user_aux.id)
-        format.json { render json: @issue, status: :ok }
+        respond_to do |format|
+          format.json { render json: @issue, status: :ok }
+        end
       end
     else
       @issue = Issue.find(params[:id])
