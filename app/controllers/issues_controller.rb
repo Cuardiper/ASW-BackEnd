@@ -166,27 +166,27 @@ class IssuesController < ApplicationController
   
   
   def vote
-    if(current_user.nil?)
-      @user_aux = authenticate
-      if(@user_aux.nil?)
-        respond_to do |format|
-        format.json {render json: { 
-         meta: {code: 401, error_message: "Unauthorized"}
-        }}
-      end
+    respond_to do |format|
+      if(current_user.nil?)
+        @user_aux = authenticate
+        if(@user_aux.nil?)
+          respond_to do |format|
+          format.json {render json: { 
+           meta: {code: 401, error_message: "Unauthorized"}
+          }}
+        end
+        else
+          Voto.create(:user_id => @user_aux.id, :issue_id => params[:id])
+          @issue = Issue.find(params[:id])
+          @issue.increment!("votes")
+        end
       else
-        Voto.create(:user_id => @user_aux.id, :issue_id => params[:id])
+        Voto.create(:user_id => current_user.id, :issue_id => params[:id])
         @issue = Issue.find(params[:id])
         @issue.increment!("votes")
       end
-    else
-      Voto.create(:user_id => current_user.id, :issue_id => params[:id])
-      @issue = Issue.find(params[:id])
-      @issue.increment!("votes")
-    end
-    respond_to do |format|
-        format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
-        format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
+      format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
+      format.json { render json: @issue, status: :ok }
     end
   end
   
