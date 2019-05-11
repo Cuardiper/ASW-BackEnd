@@ -167,7 +167,6 @@ class IssuesController < ApplicationController
   
   def vote
     if(current_user.nil?)
-      @issue = Issue.find(params[:id])
       @user_aux = authenticate
       if(@user_aux.nil?)
         respond_to do |format|
@@ -176,11 +175,13 @@ class IssuesController < ApplicationController
         }}
       end
       else
-      Voto.create(:user_id => @user_aux.id, :issue_id => params[:id])
-      @issue.increment!("votes")
+        Voto.create(:user_id => @user_aux.id, :issue_id => params[:id])
+        @issue = Issue.find(params[:id])
+        @issue.increment!("votes")
       end
     else
       Voto.create(:user_id => current_user.id, :issue_id => params[:id])
+      @issue = Issue.find(params[:id])
       @issue.increment!("votes")
     end
     respond_to do |format|
