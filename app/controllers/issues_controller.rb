@@ -166,11 +166,26 @@ class IssuesController < ApplicationController
   
   
   def vote
-    Voto.create(:user_id => current_user.id, :issue_id => params[:id])
-    @issue = Issue.find(params[:id])
-    @issue.increment!("votes")
+    if(current_user.nil?)
+      @issue = Issue.find(params[:id])
+      @user_aux = authenticate
+      if(@user_aux.nil?)
+        respond_to do |format|
+        format.json {render json: { 
+         meta: {code: 401, error_message: "Unauthorized"}
+        }}
+      end
+      else
+      Voto.create(:user_id => @user_aux.id, :issue_id => params[:id])
+      @issue.increment!("votes")
+      end
+    else
+      Voto.create(:user_id => current_user.id, :issue_id => params[:id])
+      @issue.increment!("votes")
+    end
     respond_to do |format|
-      format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
+        format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
+        format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
     end
   end
   
