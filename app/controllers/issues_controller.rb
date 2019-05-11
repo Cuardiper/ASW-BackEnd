@@ -133,7 +133,7 @@ class IssuesController < ApplicationController
   end
   
   def watch
-    #if(current_user.nil?)
+    if(current_user.nil?)
       @issue = Issue.find(params[:id])
       @user_aux = authenticate
       if(@user_aux.nil?)
@@ -145,10 +145,10 @@ class IssuesController < ApplicationController
       else
         @issue.watchers << User.find(user_aux.id)
       end
-    #else
-     # @issue = Issue.find(params[:id])
-     # @issue.watchers << User.find(current_user.id)
-    #end
+    else
+      @issue = Issue.find(params[:id])
+      @issue.watchers << User.find(current_user.id)
+    end
     respond_to do |format|
         format.html { redirect_back fallback_location: "/issues", notice: "You are now watching issue #" + @issue.id.to_s }
         format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
