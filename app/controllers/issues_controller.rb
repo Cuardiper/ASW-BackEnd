@@ -125,12 +125,14 @@ class IssuesController < ApplicationController
   # DELETE /issues/1
   # DELETE /issues/1.json
   def destroy
+    @issue = Issue.find(params[:id])
     @issue.destroy
     respond_to do |format|
       format.html { redirect_to issues_url, notice: 'Issue was successfully destroyed.' }
-      format.json { head :no_content }
+      format.json { render json: {"message": "success"}, status: :ok }
     end
   end
+
   
   def watch
     if(current_user.nil?)
@@ -208,6 +210,7 @@ class IssuesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_issue
       @issue = Issue.find(params[:id])
+      render json: { error: 'Issue not found' }, status: :not_found if @issue.nil?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
