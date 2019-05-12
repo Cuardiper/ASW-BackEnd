@@ -219,8 +219,7 @@ paths:
       responses:
         '204':
           description:  Issue deleted
-          content:
-            application/json: {}
+          content: {}
         '400':
           description: Invalid ID supplied
           content: {}
@@ -246,7 +245,7 @@ paths:
         200:
           description: successful operation
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/Issue'
         401:
@@ -689,4 +688,3 @@ components:
       type: apiKey
       name: token
       in: header
- 
