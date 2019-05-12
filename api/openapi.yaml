@@ -333,6 +333,8 @@ paths:
         '400':
           description: Invalid ID supplied
           content: {}
+      security:
+        - api_key: []
     delete:
       tags:
         - Comment
