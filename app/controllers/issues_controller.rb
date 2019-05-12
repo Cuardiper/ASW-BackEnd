@@ -1,8 +1,8 @@
 class IssuesController < ApplicationController
   include SessionsHelper
   #before_action :logged_in_user
+  skip_before_action :verify_authenticity_token
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
-  
   helper_method :sort_column, :sort_direction
   
   $s = ""
