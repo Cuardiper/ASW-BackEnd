@@ -147,6 +147,9 @@ class IssuesController < ApplicationController
       else
         if(@issue.watchers.find_by(id: @user_aux.id).nil?)
           @issue.watchers << User.find(@user_aux.id)
+          respond_to do |format|
+            format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
+          end
         else
           respond_to do |format|
             format.json {render json: {meta: {code: 204, error_message: "You have already watched this issue!"}}}
@@ -155,10 +158,10 @@ class IssuesController < ApplicationController
       end
     else
       @issue.watchers << User.find(current_user.id)
-    end
-    respond_to do |format|
-        format.html { redirect_back fallback_location: "/issues", notice: "You are now watching issue #" + @issue.id.to_s }
-        format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
+      respond_to do |format|
+          format.html { redirect_back fallback_location: "/issues", notice: "You are now watching issue #" + @issue.id.to_s }
+          format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
+      end
     end
   end
   
@@ -173,7 +176,8 @@ class IssuesController < ApplicationController
   
   
   def vote
-      error = false
+    respond_to do |format|
+      #error = false
       if(current_user.nil?)
         @user_aux = authenticate
         if(@user_aux.nil?)
@@ -181,20 +185,20 @@ class IssuesController < ApplicationController
           format.json {render json: { meta: {code: 401, error_message: "Unauthorized"}}}
         end
         else
-          if !Voto.exists?(:user_id => @user_aux.id, :issue_id => params[:id])
+          #if !Voto.exists?(:user_id => @user_aux.id, :issue_id => params[:id])
             Voto.create(:user_id => @user_aux.id, :issue_id => params[:id])
             @issue = Issue.find(params[:id])
             @issue.increment!("votes")
           #else
           #  error = true
-          end
+          #end
         end
       else
         Voto.create(:user_id => current_user.id, :issue_id => params[:id])
         @issue = Issue.find(params[:id])
         @issue.increment!("votes")
       end
-      respond_to do |format|
+      
         #if (error == true)
         #  format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
         #  format.json {render json: {error: "You have already voted this issue!"}, status: :forbidden}
@@ -202,7 +206,7 @@ class IssuesController < ApplicationController
           format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
           format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
         #end
-      end
+    end
   end
   
   def unvote
