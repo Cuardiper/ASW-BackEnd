@@ -203,7 +203,7 @@ paths:
       security:
         - api_key: []
         
-   delete:
+    delete:
       tags:
         - Issue
       summary: Deletes an issue
