@@ -173,7 +173,6 @@ class IssuesController < ApplicationController
   
   
   def vote
-    respond_to do |format|
       error = false
       if(current_user.nil?)
         @user_aux = authenticate
@@ -195,15 +194,15 @@ class IssuesController < ApplicationController
         @issue = Issue.find(params[:id])
         @issue.increment!("votes")
       end
-      
-      if (error == true)
-        format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
-        format.json {render json: {error: "You have already voted this issue!"}, status: :forbidden}
-      else
-        format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
-        format.json { render json: @issue, status: :ok }
+      respond_to do |format|
+        if (error == true)
+          format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
+          format.json {render json: {error: "You have already voted this issue!"}, status: :forbidden}
+        else
+          format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
+          format.json { render json: @issue, status: :ok }
+        end
       end
-    end
   end
   
   def unvote
