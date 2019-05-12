@@ -145,13 +145,12 @@ class IssuesController < ApplicationController
           format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}}
         end
       else
-        begin
-          @issue.watchers.find(User.find(@user_aux.id))
-           respond_to do |format|
-              format.json {render json: {meta: {code: 204, error_message: "You have already watched this issue!"}}}
-            end
-        rescue ActiveRecord::RecordNotFound => e
+        if(@issue.watchers.exists?(User.find(@user_aux.id)))
           @issue.watchers << User.find(@user_aux.id)
+        else
+          respond_to do |format|
+            format.json {render json: {meta: {code: 204, error_message: "You have already watched this issue!"}}}
+          end
         end
       end
     else
