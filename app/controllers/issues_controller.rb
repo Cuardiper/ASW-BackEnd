@@ -127,6 +127,7 @@ class IssuesController < ApplicationController
   def destroy
     @issue = Issue.find(params[:id])
     @issue.comments.destroy_all
+    @issue.attachments.destroy_all
     @issue.destroy
     respond_to do |format|
       format.html { redirect_to issues_url, notice: 'Issue was successfully deleted.' }
@@ -231,5 +232,4 @@ class IssuesController < ApplicationController
     end
 
     
-
 end
