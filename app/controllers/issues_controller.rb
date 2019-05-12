@@ -145,12 +145,13 @@ class IssuesController < ApplicationController
           format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}}
         end
       else
-        if(@issue.watchers.find(User.find(@user_aux.id)).nil?)
+        begin
+          @issue.watchers.find(User.find(@user_aux.id))
+           respond_to do |format|
+              format.json {render json: {meta: {code: 204, error_message: "You have already watched this issue!"}}}
+            end
+        rescue ActiveRecord::RecordNotFound => e
           @issue.watchers << User.find(@user_aux.id)
-        else
-          respond_to do |format|
-            format.json {render json: {meta: {code: 204, error_message: "You have already watched this issue!"}}}
-          end
         end
       end
     else
@@ -183,7 +184,7 @@ class IssuesController < ApplicationController
           }}
         end
         else
-          if !Voto.exists?(:issue_id => params[:id], :user_id => @user_aux.id)
+          if !Voto.exists?(issue_id: params[:id], user_id: @user_aux.id)
             Voto.create(:user_id => @user_aux.id, :issue_id => params[:id])
             @issue = Issue.find(params[:id])
             @issue.increment!("votes")
