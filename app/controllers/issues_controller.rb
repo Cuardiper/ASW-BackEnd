@@ -142,7 +142,7 @@ class IssuesController < ApplicationController
       @user_aux = authenticate
       if(@user_aux.nil?)
         respond_to do |format|
-          format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}}
+          format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}, status: :unauthorized}
         end
       else
         if(@issue.watchers.find_by(id: @user_aux.id).nil?)
@@ -152,7 +152,7 @@ class IssuesController < ApplicationController
           end
         else
           respond_to do |format|
-            format.json {render json: {meta: {code: 204, error_message: "You have already watched this issue!"}}, status: :error}
+            format.json {render json: @issue, status: :ok, serializer: IssueSerializer }
           end
         end
       end
@@ -167,9 +167,29 @@ class IssuesController < ApplicationController
   
   def unwatch
     @issue = Issue.find(params[:id])
-    @issue.watchers.delete(User.find(current_user.id)) 
-    respond_to do |format|
-      format.html { redirect_back fallback_location: "/issues", notice: "You are no longer watching issue #" + @issue.id.to_s }
+    if(current_user.nil?)
+      @user_aux = authenticate
+      if(@user_aux.nil?)
+        respond_to do |format|
+          format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}, status: :unauthorized}
+        end
+      else
+        if(@issue.watchers.find_by(id: @user_aux.id).nil?)
+          respond_to do |format|
+            format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
+          end
+        else
+          @issue.watchers.delete(User.find(@user_aux.id)) 
+          respond_to do |format|
+            format.json {render json: @issue, status: :ok, serializer: IssueSerializer }
+          end
+        end
+      end 
+    else
+      @issue.watchers.delete(User.find(current_user.id)) 
+      respond_to do |format|
+        format.html { redirect_back fallback_location: "/issues", notice: "You are no longer watching issue #" + @issue.id.to_s }
+      end
     end
   end
   
@@ -180,12 +200,13 @@ class IssuesController < ApplicationController
       @user_aux = authenticate
       if(@user_aux.nil?)
         respond_to do |format|
-          format.json {render json: { meta: {code: 401, error_message: "Unauthorized"}}}
+          format.json {render json: { meta: {code: 401, error_message: "Unauthorized"}}, status: :unauthorized}
         end
       else
         if (Voto.exists?(:user_id => @user_aux.id, :issue_id => params[:id]))
+          @issue = Issue.find(params[:id])
           respond_to do |format|
-           format.json {render json: {error: "You have already voted this issue!"}, status: :forbidden}
+           format.json {render json: @issue, status: :ok, serializer: IssueSerializer }
           end
         else
           Voto.create(:user_id => @user_aux.id, :issue_id => params[:id])
@@ -208,12 +229,37 @@ class IssuesController < ApplicationController
   end
   
   def unvote
-    @vote = Voto.where(issue_id: params[:id], user_id: current_user.id).take
-    @vote.destroy
-    @issue = Issue.find(params[:id])
-    @issue.decrement!("votes")
-    respond_to do |format|
-      format.html { redirect_back fallback_location: "/issues", notice: "You have unvoted the issue #" + params[:id].to_s }
+    if(current_user.nil?)
+      @user_aux = authenticate
+      if(@user_aux.nil?)
+        respond_to do |format|
+          format.json {render json: { meta: {code: 401, error_message: "Unauthorized"}}, status: :unauthorized}
+        end
+      else
+        if (Voto.exists?(:user_id => @user_aux.id, :issue_id => params[:id]))
+          @vote = Voto.where(issue_id: params[:id], user_id: current_user.id).take
+          @vote.destroy
+          @issue = Issue.find(params[:id])
+          @issue.decrement!("votes")
+          respond_to do |format|
+           format.json {render json: @issue, status: :ok, serializer: IssueSerializer }
+          end
+        else
+          @issue = Issue.find(params[:id])
+          respond_to do |format|
+            format.json {render json: @issue, status: :ok, serializer: IssueSerializer }
+          end
+        end
+      end
+    else 
+      @vote = Voto.where(issue_id: params[:id], user_id: current_user.id).take
+      @vote.destroy
+      @issue = Issue.find(params[:id])
+      @issue.decrement!("votes")
+      respond_to do |format|
+        format.html { redirect_back fallback_location: "/issues", notice: "You have unvoted the issue #" + params[:id].to_s }
+        format.json {render json: @issue, status: :ok, serializer: IssueSerializer }
+      end
     end
   end
   

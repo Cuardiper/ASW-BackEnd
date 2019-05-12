@@ -1,6 +1,10 @@
 class IssueSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :type_issue, :priority, :status, :votes, :creator_id, :assignee_id, :created_at, :updated_at, :_links
+  attributes :id, :title, :description, :type_issue, :priority, :status, :votes, :creator_id, :assignee_id, :created_at, :updated_at, :watching_by, :_links
 
+    def watching_by
+      Issue.find(object.id).take.watchers
+    end
+  
   def _links
     if object.assignee_id != nil
       links = {
