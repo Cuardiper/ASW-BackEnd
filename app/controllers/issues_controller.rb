@@ -135,7 +135,6 @@ class IssuesController < ApplicationController
 
   
   def watch
-
     if(current_user.nil?)
      @issue = Issue.find(params[:id])
       @user_aux = authenticate
@@ -144,7 +143,9 @@ class IssuesController < ApplicationController
           format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}}
         end
       else
-        @issue.watchers << User.find(@user_aux.id)
+        if(@issue.watchers.find(@user_aux.id).nil?)
+          @issue.watchers << User.find(@user_aux.id)
+        end
       end
     else
       @issue = Issue.find(params[:id])
