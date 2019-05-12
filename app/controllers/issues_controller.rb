@@ -135,28 +135,34 @@ class IssuesController < ApplicationController
 
   
   def watch
-    print("hola")
-    if(current_user.nil?)
-      @issue = Issue.find(params[:id])
-      @user_aux = authenticate
-      if(@user_aux.nil?)
-        respond_to do |format|
-        format.json {render json: { 
-         meta: {code: 401, error_message: "Unauthorized"}
-        }}
-      end
-      else
-        @issue.watchers << User.find(user_aux.id)
-      end
+    if(@user_aux.nil?)  
+      respond_to do |format|
+         format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}}
+         end
     else
-      @issue = Issue.find(params[:id])
-      @issue.watchers << User.find(current_user.id)
-    end
-    respond_to do |format|
-        format.html { redirect_back fallback_location: "/issues", notice: "You are now watching issue #" + @issue.id.to_s }
-        format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
+      @issues=Issue.where(creator_id: @user_aux.id)
+      format.json {render json: @issues, status: :ok, each_serializer: IssueSerializer}
     end
   end
+    #if(current_user.nil?)
+     # @issue = Issue.find(params[:id])
+      #@user_aux = authenticate
+      #if(@user_aux.nil?)
+       # respond_to do |format|
+       #   format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}}
+       # end
+     # else
+     #   @issue.watchers << User.find(user_aux.id)
+     # end
+   # else
+   #   @issue = Issue.find(params[:id])
+   #   @issue.watchers << User.find(current_user.id)
+   # end
+  #  respond_to do |format|
+  #      format.html { redirect_back fallback_location: "/issues", notice: "You are now watching issue #" + @issue.id.to_s }
+  #      format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
+  #  end
+  #end
   
   def unwatch
     @issue = Issue.find(params[:id])
