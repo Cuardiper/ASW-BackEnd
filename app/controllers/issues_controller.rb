@@ -185,8 +185,8 @@ class IssuesController < ApplicationController
             Voto.create(:user_id => @user_aux.id, :issue_id => params[:id])
             @issue = Issue.find(params[:id])
             @issue.increment!("votes")
-          else
-            error = true
+          #else
+          #  error = true
           end
         end
       else
@@ -195,13 +195,13 @@ class IssuesController < ApplicationController
         @issue.increment!("votes")
       end
       respond_to do |format|
-        if (error == true)
+        #if (error == true)
+        #  format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
+        #  format.json {render json: {error: "You have already voted this issue!"}, status: :forbidden}
+        #else
           format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
-          format.json {render json: {error: "You have already voted this issue!"}, status: :forbidden}
-        else
-          format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
-          format.json { render json: @issue, status: :ok }
-        end
+          format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
+        #end
       end
   end
   
