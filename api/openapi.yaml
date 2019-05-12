@@ -219,7 +219,8 @@ paths:
       responses:
         '204':
           description:  Issue deleted
-          content: {}
+          content:
+            application/json: {}
         '400':
           description: Invalid ID supplied
           content: {}
