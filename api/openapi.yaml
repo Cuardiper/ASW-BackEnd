@@ -659,6 +659,9 @@ components:
         votes:
           type: integer
           format: int64
+        watches:
+          type: integer
+          format: int64
         creator_id:
           type: integer
           format: int64
@@ -671,8 +674,24 @@ components:
         updated_at:
           type: string
           format: date-time
-
-
+        voters:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        watchers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
       xml:
         name: Issue
     
