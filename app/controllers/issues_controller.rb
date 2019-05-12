@@ -135,6 +135,7 @@ class IssuesController < ApplicationController
 
   
   def watch
+    print("hola")
     if(current_user.nil?)
       @issue = Issue.find(params[:id])
       @user_aux = authenticate
