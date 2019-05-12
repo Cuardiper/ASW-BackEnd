@@ -135,6 +135,7 @@ class IssuesController < ApplicationController
 
   
   def watch
+    @user_aux = authenticate
     if(@user_aux.nil?)  
       respond_to do |format|
          format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}}
