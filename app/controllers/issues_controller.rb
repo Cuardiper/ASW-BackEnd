@@ -188,7 +188,7 @@ class IssuesController < ApplicationController
             @issue = Issue.find(params[:id])
             @issue.increment!("votes")
           else
-            format.json {render json: {meta: {code: 204, error_message: "You have already voted this issue!"}}}
+            error = true
           end
         end
       else
@@ -197,7 +197,11 @@ class IssuesController < ApplicationController
         @issue.increment!("votes")
       end
       format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
-      format.json { render json: @issue, status: :ok }
+      if error
+        format.json {render json: {meta: {code: 204, error_message: "You have already voted this issue!"}}}
+      else
+        format.json { render json: @issue, status: :ok }
+      end
     end
   end
   
