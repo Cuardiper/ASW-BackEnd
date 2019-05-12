@@ -152,7 +152,7 @@ class IssuesController < ApplicationController
           end
         else
           respond_to do |format|
-            format.json {render json: {meta: {code: 204, error_message: "You have already watched this issue!"}}}
+            format.json {render json: {meta: {code: 204, error_message: "You have already watched this issue!"}}, status: :error}
           end
         end
       end
@@ -176,36 +176,34 @@ class IssuesController < ApplicationController
   
   
   def vote
-    respond_to do |format|
-      #error = false
-      if(current_user.nil?)
-        @user_aux = authenticate
-        if(@user_aux.nil?)
-          respond_to do |format|
+    if(current_user.nil?)
+      @user_aux = authenticate
+      if(@user_aux.nil?)
+        respond_to do |format|
           format.json {render json: { meta: {code: 401, error_message: "Unauthorized"}}}
         end
-        else
-          #if !Voto.exists?(:user_id => @user_aux.id, :issue_id => params[:id])
-            Voto.create(:user_id => @user_aux.id, :issue_id => params[:id])
-            @issue = Issue.find(params[:id])
-            @issue.increment!("votes")
-          #else
-          #  error = true
-          #end
-        end
       else
-        Voto.create(:user_id => current_user.id, :issue_id => params[:id])
-        @issue = Issue.find(params[:id])
-        @issue.increment!("votes")
+        if (Voto.exists?(:user_id => @user_aux.id, :issue_id => params[:id]))
+          respond_to do |format|
+           format.json {render json: {error: "You have already voted this issue!"}, status: :forbidden}
+          end
+        else
+          Voto.create(:user_id => @user_aux.id, :issue_id => params[:id])
+          @issue = Issue.find(params[:id])
+          @issue.increment!("votes")
+          respond_to do |format|
+            format.json {render json: @issue, status: :ok, serializer: IssueSerializer }
+          end
+        end
       end
-      
-        #if (error == true)
-        #  format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
-        #  format.json {render json: {error: "You have already voted this issue!"}, status: :forbidden}
-        #else
-          format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
-          format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
-        #end
+    else
+      Voto.create(:user_id => current_user.id, :issue_id => params[:id])
+      @issue = Issue.find(params[:id])
+      @issue.increment!("votes")
+      respond_to do |format|
+        format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
+        format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
+      end
     end
   end
   
