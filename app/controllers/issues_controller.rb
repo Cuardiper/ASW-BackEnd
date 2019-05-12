@@ -145,7 +145,7 @@ class IssuesController < ApplicationController
           format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}}
         end
       else
-        if(@issue.watchers.exists?(id: @user_aux.id))
+        if(@issue.watchers.find_by(id: @user_aux.id).nil?)
           @issue.watchers << User.find(@user_aux.id)
         else
           respond_to do |format|
@@ -174,13 +174,12 @@ class IssuesController < ApplicationController
   
   def vote
     respond_to do |format|
+      error = false
       if(current_user.nil?)
         @user_aux = authenticate
         if(@user_aux.nil?)
           respond_to do |format|
-          format.json {render json: { 
-           meta: {code: 401, error_message: "Unauthorized"}
-          }}
+          format.json {render json: { meta: {code: 401, error_message: "Unauthorized"}}}
         end
         else
           if !Voto.exists?(:user_id => @user_aux.id, :issue_id => params[:id])
@@ -196,10 +195,12 @@ class IssuesController < ApplicationController
         @issue = Issue.find(params[:id])
         @issue.increment!("votes")
       end
-      format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
-      if error
-        format.json {render json: {meta: {code: 204, error_message: "You have already voted this issue!"}}}
+      
+      if (error == true)
+        format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
+        format.json {render json: {error: "You have already voted this issue!"}, status: :forbidden}
       else
+        format.html { redirect_back fallback_location: "/issues", notice: "You have voted the issue #" + params[:id].to_s }
         format.json { render json: @issue, status: :ok }
       end
     end
