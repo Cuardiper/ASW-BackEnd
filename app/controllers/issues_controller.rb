@@ -12,6 +12,7 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
   def index
+    
     respond_to do |format|
       @issues = Issue.all.order(sort_column + " " + sort_direction)
       if params[:status].present? and params[:status].length != 2
@@ -45,7 +46,17 @@ class IssuesController < ApplicationController
       if params.has_key?(:watcher)
         @issues = User.find(params[:watcher]).watched
       end
-    
+      
+      @user_aux = authenticate
+      if(@user_aux.nil?)
+        respond_to do |format|
+          format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}, status: :unauthorized}
+        end
+      else
+        if params.has_key?(:watching)
+          @issues = User.find(@user_aux.id).watched
+        end
+      end
       format.html
       format.json {render json: @issues, status: :ok, each_serializer: IssueSerializer}
     end
