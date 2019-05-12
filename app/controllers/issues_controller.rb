@@ -237,7 +237,7 @@ class IssuesController < ApplicationController
         end
       else
         if (Voto.exists?(:user_id => @user_aux.id, :issue_id => params[:id]))
-          @vote = Voto.where(issue_id: params[:id], user_id: current_user.id).take
+          @vote = Voto.where(issue_id: params[:id], user_id: @user_aux.id).take
           @vote.destroy
           @issue = Issue.find(params[:id])
           @issue.decrement!("votes")
