@@ -137,8 +137,8 @@ class IssuesController < ApplicationController
 
   
   def watch
+    @issue = Issue.find(params[:id])
     if(current_user.nil?)
-     @issue = Issue.find(params[:id])
       @user_aux = authenticate
       if(@user_aux.nil?)
         respond_to do |format|
@@ -150,7 +150,6 @@ class IssuesController < ApplicationController
         end
       end
     else
-      @issue = Issue.find(params[:id])
       @issue.watchers << User.find(current_user.id)
     end
     respond_to do |format|
