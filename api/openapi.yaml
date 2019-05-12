@@ -109,6 +109,14 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: watching
+          in: query
+          description: Watching filter
+          required: false
+          schema:
+            type: string
+            enum:
+              - watching
       responses:
         '200':
           description: successful operation
