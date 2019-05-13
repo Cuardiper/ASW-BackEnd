@@ -64,17 +64,17 @@ class CommentsController < ApplicationController
       format.json {render json: { 
        meta: {code: 401, error_message: "Unauthorized"}
       }}
-    end
+      end
     else
-    request_parameters = JSON.parse(request.body.read.to_s)
-    text = request_parameters["text"]
-    @comment = Comment.create(text: text, reporter_id: @user_aux.id, issue_id: @idIssue)
+      request_parameters = JSON.parse(request.body.read.to_s)
+      text = request_parameters["text"]
+      @comment = Comment.create(text: text, reporter_id: @user_aux.id, issue_id: @idIssue)
     end
     
     respond_to do |format|
       if @comment.save
         format.html { redirect_back fallback_location: "/issues", notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment, serializer: CommentSerializer }
+        format.json { render :show, status: :created, location: @comment, each_serializer: CommentSerializer }
       else
         format.html { render :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
