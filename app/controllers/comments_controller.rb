@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
     @comments = Comment.all.where(issue_id: params[:Issue_id])
     respond_to do |format|
       format.html { @comments }
-      format.json { render json: @comments.to_json() }
+      format.json { render json: @comments, status: :ok, each_serializer: CommentSerializer}
     end
   end
   
@@ -74,7 +74,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         format.html { redirect_back fallback_location: "/issues", notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment, serializer: CommentSerializer }
+        format.json { render json: @comments, status: :created, serializer: CommentSerializer}
       else
         format.html { render :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
@@ -99,7 +99,7 @@ class CommentsController < ApplicationController
             if @comment.update(text: text)
               render json: @comment, status: :ok, serializer: CommentSerializer
             else
-              render json: @comment.errors, status: :unprocessable_entity
+              render json: @comment.errors, status: 404
             end
           else
             render json: {

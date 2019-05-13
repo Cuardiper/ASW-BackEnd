@@ -587,6 +587,9 @@ paths:
               operationId: getIssuesById
               parameters: 
                 IssueId: '$response.body#/issue_id'
+        '404':
+          description: Not Found
+          content: {}  
       security:
         - api_key: []
     put:
@@ -641,6 +644,9 @@ paths:
         '400':
           description: Bad Request
           content: {}
+        '404':
+            description: Not Found
+            content: {}  
       security:
         - api_key: []
     delete:
@@ -686,6 +692,28 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Comment'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `CommentId` parameter in `GET /comments/{CommentId}`.
+              operationId: getCommentById
+              parameters: 
+                CommentId: '$response.body#/id'  
+            reporter:
+              description: >
+                The `reporter_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/reporter_id'
+            issue:
+              description: >
+                The `issue_id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/issue_id' 
+        '404':
+            description: Not Found
+            content: {}  
       security:
         - api_key: []
     post:
@@ -716,7 +744,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
                 items:
                   $ref: '#/components/schemas/Comment'
           links:
