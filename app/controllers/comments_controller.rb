@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
     @comments = Comment.all.where(issue_id: params[:Issue_id])
     respond_to do |format|
       format.html { @comments }
-      format.json { render json: @comments.to_json() }
+      format.json { render json: @comments, status: :ok, each_serializer: CommentSerializer}
     end
   end
   
@@ -74,7 +74,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         format.html { redirect_back fallback_location: "/issues", notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment }
+        format.json { render :show, status: :created, location: @comment, serializer: CommentSerializer }
       else
         format.html { render :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
@@ -97,9 +97,9 @@ class CommentsController < ApplicationController
             request_parameters = JSON.parse(request.body.read.to_s)
             text = request_parameters["text"]
             if @comment.update(text: text)
-            render json: @comment, status: :updated
+              render json: @comment, status: :ok, serializer: CommentSerializer
             else
-              render json: @comment.errors, status: :unprocessable_entity
+              render json: @comment.errors, status: 404
             end
           else
             render json: {
@@ -117,13 +117,13 @@ class CommentsController < ApplicationController
     else #no venimos de api
       id_isue = @comment.issue_id.to_s
       respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to "/issues/" + id_isue, notice: 'Comment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @comment }
-      else
-        format.html { render :edit }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+        if @comment.update(comment_params)
+          format.html { redirect_to "/issues/" + id_isue, notice: 'Comment was successfully updated.' }
+          format.json { render :show, status: :ok, location: @comment }
+        else
+          format.html { render :edit }
+          format.json { render json: @comment.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

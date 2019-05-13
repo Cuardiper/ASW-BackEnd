@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   post '/issues/:id/vote' => "issues#vote", as: :vote
   post '/issues/:id/unvote' => "issues#unvote", as: :unvote
   
+  put '/issues/:id/status' => "issues#status", as: :status
+  
   #root 'issues#index'
   root to: "home#show"
   
