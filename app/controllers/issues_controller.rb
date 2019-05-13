@@ -167,7 +167,7 @@ class IssuesController < ApplicationController
           end
       else 
         respond_to do |format|
-          format.json {render json: {meta: {code: 400, error_message: "Status should be one of the following: new, closed, open, resolved, duplicated, on hold, invalid, wontfix"}}, status: :bad_request}
+          format.json {render json: { error_message: "Status should be one of the following: new, closed, open, resolved, duplicated, on hold, invalid, wontfix"}, status: :bad_request}
         end
       end
     end

@@ -375,6 +375,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Issue'
+        400:
+          description: Bad Request
+          content: {}
         401:
           description: API key is missing or invalid
           content: {}
