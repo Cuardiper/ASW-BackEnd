@@ -109,7 +109,7 @@ class IssuesController < ApplicationController
           if assignee == 0
              @issue = Issue.create(title: title, description: details, type_issue: type, priority: priority, creator_id: @user_aux.id, status:"new")
           else
-            assignee_aux = User.where(uid: assignee)
+            assignee_aux = User.find(assignee)
             if(assignee_aux)
               @issue = Issue.create(title: title, description: details, type_issue: type, priority: priority, creator_id: @user_aux.id, assignee_id: assignee,status:"new")
             else
