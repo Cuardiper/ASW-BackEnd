@@ -358,6 +358,16 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        description: Updated comment object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status: 
+                  type: string
       responses:
         200:
           description: successful operation
