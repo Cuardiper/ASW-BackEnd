@@ -152,34 +152,100 @@ class IssuesController < ApplicationController
   # PATCH/PUT /issues/1.json
   def update
     comment_text = ""
-    if (issue_params[:status].present? and issue_params[:status] != @issue.status) 
-      comment_text +="changed status to " + issue_params[:status] + "<br>"
-    end
-    if (issue_params[:title].present? and issue_params[:title] != @issue.title) 
-      comment_text = comment_text + "changed title to " + issue_params[:title] + "<br>"
-    end
-    if (issue_params[:type_issue].present? and issue_params[:type_issue] != @issue.type_issue)
-      comment_text = comment_text + "marked as " + issue_params[:type_issue] + "<br>"
-    end
-    if (issue_params[:priority].present? and issue_params[:priority] != @issue.priority)
-      comment_text = comment_text + "marked as " + issue_params[:priority] + "<br>"
-    end
-    if (issue_params[:assignee_id].present? and issue_params[:assignee_id] != @issue.assignee_id)
-      comment_text = comment_text + "assigned issue to " + User.find(issue_params[:assignee_id]).name + "<br>"
-    end
-    if (issue_params[:description].present? and issue_params[:description] != @issue.description) 
-      comment_text = comment_text + "edited description" + "<br>"
-    end
-    if (comment_text != "")
-      Comment.create(:text => comment_text, :reporter_id => current_user.id, :issue_id => @issue.id)
-    end
-    respond_to do |format|
-      if @issue.update(issue_params)
-        format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
-        format.json { render :show, status: :ok, location: @issue }
-      else
-        format.html { render :edit }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+    if(current_user.nil?)
+      token2 = request.headers['token']
+      if(token2)
+        @user_aux = authenticate
+        @idIssue = params[:Issue_id]
+        if(@user_aux.nil?)
+          render json: { meta: {code: 401, error_message: "Invalid token"}}
+        else
+          request_parameters = JSON.parse(request.body.read.to_s)
+          title = request_parameters["text"]
+          details = request_parameters["details"]
+          type = request_parameters["type"]
+          priority = request_parameters["Priority"]
+          assignee = request_parameters["Assignee"]
+          status = request_parameters["Status"]
+          
+          if (status !="" and status != @issue.status) 
+          comment_text +="changed status to " + status + "<br>"
+          else 
+            status = @issue.status
+          end
+          if (title != "" and title != @issue.title) 
+            comment_text = comment_text + "changed title to " + title + "<br>"
+          else 
+            title = @issue.title
+          end
+          if (type != "" and type != @issue.type_issue)
+            comment_text = comment_text + "marked as " + type + "<br>"
+          else 
+            type = @issue.type_issue
+          end
+          if (priority != "" and priority != @issue.priority)
+            comment_text = comment_text + "marked as " + priority + "<br>"
+          else 
+            priority = @issue.priority
+          end
+          if (assignee != 0  and assignee != @issue.assignee_id  )
+            comment_text = comment_text + "assigned issue to " + User.find(assignee).name + "<br>"
+          else 
+            assignee = @issue.assignee
+          end
+          if (details != "" and details != @issue.description) 
+            comment_text = comment_text + "edited description" + "<br>"
+          else 
+            title = @issue.description
+          end
+          if (comment_text != "")
+            Comment.create(:text => comment_text, :reporter_id => @user_aux.uid, :issue_id => @idIssue)
+          end
+          if @issue.update(title: title, description: details, type_issue: type, priority: priority, creator_id: @user_aux.id, assignee_id: assignee, status: status, issue_id: @idIssue)
+              render json: @issue, status: :ok, serializer: IssueSerializer
+          else
+              render json: @issue.errors, status: 404
+          end
+          
+        end
+      else 
+        render json: {
+          error: "Missing token in header",
+          status: 401
+        },status: 400
+      end
+    
+    else
+      
+      if (issue_params[:status].present? and issue_params[:status] != @issue.status) 
+        comment_text +="changed status to " + issue_params[:status] + "<br>"
+      end
+      if (issue_params[:title].present? and issue_params[:title] != @issue.title) 
+        comment_text = comment_text + "changed title to " + issue_params[:title] + "<br>"
+      end
+      if (issue_params[:type_issue].present? and issue_params[:type_issue] != @issue.type_issue)
+        comment_text = comment_text + "marked as " + issue_params[:type_issue] + "<br>"
+      end
+      if (issue_params[:priority].present? and issue_params[:priority] != @issue.priority)
+        comment_text = comment_text + "marked as " + issue_params[:priority] + "<br>"
+      end
+      if (issue_params[:assignee_id].present? and issue_params[:assignee_id] != @issue.assignee_id)
+        comment_text = comment_text + "assigned issue to " + User.find(issue_params[:assignee_id]).name + "<br>"
+      end
+      if (issue_params[:description].present? and issue_params[:description] != @issue.description) 
+        comment_text = comment_text + "edited description" + "<br>"
+      end
+      if (comment_text != "")
+        Comment.create(:text => comment_text, :reporter_id => current_user.id, :issue_id => @issue.id)
+      end
+      respond_to do |format|
+        if @issue.update(issue_params)
+          format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
+          format.json { render :show, status: :ok, location: @issue }
+        else
+          format.html { render :edit }
+          format.json { render json: @issue.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
