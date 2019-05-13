@@ -120,8 +120,11 @@ class IssuesController < ApplicationController
           if(error == true)
             render json: { meta: {code: 401, error_message: "Invalid Assignee"}}
           else
-            format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
-            format.json { render :show, status: :created, location: @issue }
+            if @issue.save
+              render :show, status: :created, location: @issue, each_serializer: IssueSerializer
+            else
+              render json: @issue.errors, status: :unprocessable_entity
+            end
           end
         end
       else 
@@ -132,8 +135,7 @@ class IssuesController < ApplicationController
       end
     
     else
-    @issue = Issue.new(issue_params)
-
+      @issue = Issue.new(issue_params)
       respond_to do |format|
         if @issue.save
           format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
