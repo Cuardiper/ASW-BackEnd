@@ -136,7 +136,7 @@ class CommentsController < ApplicationController
     @comment.destroy
     respond_to do |format|
       format.html { redirect_back fallback_location: "/issues/" + id_isue, notice: 'Comment was successfully destroyed.' }
-      format.json { head :no_content }
+      format.json { render json: {"message": "Comment deleted"}, status: :ok }
     end
   end
 
