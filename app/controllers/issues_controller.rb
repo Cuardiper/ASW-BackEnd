@@ -100,13 +100,13 @@ class IssuesController < ApplicationController
           type = request_parameters["type"]
           priority = request_parameters["Priority"]
           assignee = request_parameters["Assignee"]
-          if type.length == 0 
+          if type == ""
             type = "bug"
           end
-          if priority.length == 0 
+          if priority == ""
             priority = "trivial"
           end
-          if assignee.length == 0
+          if assignee == 0
              @issue = Issue.create(title: title, description: details, type_issue: type, priority: priority, creator_id: @user_aux.id)
           else
             assignee_aux = User.where(uid: assigne).first
