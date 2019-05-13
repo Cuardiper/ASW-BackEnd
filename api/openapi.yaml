@@ -346,6 +346,33 @@ paths:
           content: {}
       security:
         - api_key: []
+  /issues/{IssueId}/status:
+    put:
+      tags:
+      - Issue
+      description:  Changes the status of the issue with the ID IssueId as the current authenticated user
+      parameters:
+      - name: IssueId
+        in: path
+        description: ID of the issue to change status
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+        401:
+          description: API key is missing or invalid
+          content: {}
+        404:
+          description: Object not found
+          content: {}
+      security:
+        - api_key: []
   /comments:
     get:
       tags:

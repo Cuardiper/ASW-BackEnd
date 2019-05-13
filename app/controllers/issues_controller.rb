@@ -136,6 +136,33 @@ class IssuesController < ApplicationController
       end
     end
   end
+  
+  def status
+    @issue = Issue.find(params[:id])
+    @user_aux = authenticate
+    if(@user_aux.nil?)
+      respond_to do |format|
+        format.json {render json: {meta: {code: 401, error_message: "Unauthorized"}}, status: :unauthorized}
+      end
+    else
+      comment_text = ""
+      if (issue_params[:status].present? and issue_params[:status] != @issue.status) 
+        comment_text +="changed status to " + issue_params[:status] + "<br>"
+      end
+      if (comment_text != "")
+        Comment.create(:text => comment_text, :reporter_id => @user_aux.id, :issue_id => @issue.id)
+      end
+      respond_to do |format|
+        if @issue.update(issue_params)
+          format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
+          format.json { render :show, status: :ok, location: @issue }
+        else
+          format.html { render :edit }
+          format.json { render json: @issue.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
 
   # DELETE /issues/1
   # DELETE /issues/1.json
