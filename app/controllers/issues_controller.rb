@@ -90,6 +90,7 @@ class IssuesController < ApplicationController
     if(current_user.nil?)
       token2 = request.headers['token']
       if(token2)
+        @user_aux = authenticate
         if(@user_aux.nil?)
           render json: { meta: {code: 401, error_message: "Invalid token"}}
         else
