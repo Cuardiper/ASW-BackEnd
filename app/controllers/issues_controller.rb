@@ -87,16 +87,60 @@ class IssuesController < ApplicationController
   # POST /issues
   # POST /issues.json
   def create
+    if(current_user.nil?)
+      token2 = request.headers['token']
+      if(token2)
+        if(@user_aux.nil?)
+          render json: { meta: {code: 401, error_message: "Invalid token"}}
+        else
+          request_parameters = JSON.parse(request.body.read.to_s)
+          title = request_parameters["text"]
+          details = request_parameters["details"]
+          type = request_parameters["type"]
+          priority = request_parameters["Priority"]
+          assignee = request_parameters["Assignee"]
+          if type.length == 0 
+            type = "bug"
+          end
+          if priority.length == 0 
+            priority = "trivial"
+          end
+          if assignee.length == 0
+             @issue = Issue.create(title: title, description: details, type_issue: type, priority: priority, creator_id: @user_aux.id)
+          else
+            assignee_aux = User.where(uid: assigne).first
+            if(assignee_aux)
+              @issue = Issue.create(title: title, description: details, type_issue: type, priority: priority, creator_id: @user_aux.id, assignee_id: assignee)
+            else
+              error = true
+            end
+          end 
+          
+          if(error == true)
+            render json: { meta: {code: 401, error_message: "Invalid Assignee"}}
+          else
+            format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
+            format.json { render :show, status: :created, location: @issue }
+          end
+        end
+      else 
+        render json: {
+          error: "Missing token in header",
+          status: 401
+        },status: 400
+      end
     
+    else
     @issue = Issue.new(issue_params)
 
-    respond_to do |format|
-      if @issue.save
-        format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
-        format.json { render :show, status: :created, location: @issue }
-      else
-        format.html { render :new }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @issue.save
+          format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
+          format.json { render :show, status: :created, location: @issue }
+        else
+          format.html { render :new }
+          format.json { render json: @issue.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

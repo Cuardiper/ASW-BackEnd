@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   get 'home/show'
 
+  post '/issues' =>"issues#create", as: :create
   post '/issues/:id/watch' => "issues#watch", as: :watch
   post '/issues/:id/unwatch' => "issues#unwatch", as: :unwatch
   
