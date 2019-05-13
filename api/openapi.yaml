@@ -607,17 +607,39 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Comment'
+              type: object
+              properties:
+                text: 
+                  type: string
         required: true
       responses:
-        '204':
-          description:  Comment deleted
+        '200':
+          description:  successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Comment'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `CommentId` parameter in `GET /comments/{CommentId}`.
+              operationId: getCommentById
+              parameters: 
+                CommentId: '$response.body#/id'  
+            reporter:
+              description: >
+                The `reporter_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/reporter_id'
+            issue:
+              description: >
+                The `issue_id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/issue_id'
         '400':
-          description: Invalid ID supplied
+          description: Bad Request
           content: {}
       security:
         - api_key: []
@@ -683,16 +705,42 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Comment'
+              type: object
+              properties:
+                text: 
+                  type: string
+        required: true
       responses:
-        '200':
-          description: successful operation
+        '201':
+          description: Comment Created
           content:
             application/json:
               schema:
-                type: array
+                type: object
                 items:
                   $ref: '#/components/schemas/Comment'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `CommentId` parameter in `GET /comments/{CommentId}`.
+              operationId: getCommentById
+              parameters: 
+                CommentId: '$response.body#/id'  
+            reporter:
+              description: >
+                The `reporter_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/reporter_id'
+            issue:
+              description: >
+                The `issue_id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/issue_id'
+        '400':
+          description: Bad Request
+          content: {}
       security:
         - api_key: []
         
