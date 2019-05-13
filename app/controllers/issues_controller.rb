@@ -159,7 +159,7 @@ class IssuesController < ApplicationController
           respond_to do |format|
             if @issue.update(issue_params)
               format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
-              format.json { render :show, status: :ok, location: @issue }
+              format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
             else
               format.html { render :edit }
               format.json { render json: @issue.errors, status: :unprocessable_entity }
@@ -182,7 +182,7 @@ class IssuesController < ApplicationController
     @issue.destroy
     respond_to do |format|
       format.html { redirect_to issues_url, notice: 'Issue was successfully deleted.' }
-      format.json { render json: {"message": "success"}, status: :ok }
+      format.json { render json: {message: "success"}, status: :ok }
     end
   end
 

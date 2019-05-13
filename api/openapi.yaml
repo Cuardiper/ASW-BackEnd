@@ -256,6 +256,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Issue'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/id'  
+            creator:
+              description: >
+                The `creator_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/creator_id'
+            assignee:
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/assignee_id'
+              description: >
+                The `assignee_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+            comments:
+              operationId: getCommentByIssueId
+              parameters: 
+                IssueId: '$response.body#/id'
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}/comments`.
         401:
           description: API key is missing or invalid
           content: {}
@@ -284,6 +309,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Issue'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/id'  
+            creator:
+              description: >
+                The `creator_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/creator_id'
+            assignee:
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/assignee_id'
+              description: >
+                The `assignee_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+            comments:
+              operationId: getCommentByIssueId
+              parameters: 
+                IssueId: '$response.body#/id'
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}/comments`.
         401:
           description: API key is missing or invalid
           content: {}
@@ -311,6 +361,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Issue'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/id'  
+            creator:
+              description: >
+                The `creator_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/creator_id'
+            assignee:
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/assignee_id'
+              description: >
+                The `assignee_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+            comments:
+              operationId: getCommentByIssueId
+              parameters: 
+                IssueId: '$response.body#/id'
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}/comments`.
         401:
           description: API key is missing or invalid
           content: {}
@@ -338,6 +413,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Issue'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/id'  
+            creator:
+              description: >
+                The `creator_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/creator_id'
+            assignee:
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/assignee_id'
+              description: >
+                The `assignee_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+            comments:
+              operationId: getCommentByIssueId
+              parameters: 
+                IssueId: '$response.body#/id'
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}/comments`.
         401:
           description: API key is missing or invalid
           content: {}
@@ -375,6 +475,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Issue'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/id'  
+            creator:
+              description: >
+                The `creator_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/creator_id'
+            assignee:
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/assignee_id'
+              description: >
+                The `assignee_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+            comments:
+              operationId: getCommentByIssueId
+              parameters: 
+                IssueId: '$response.body#/id'
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}/comments`.
         400:
           description: Bad Request
           content: {}
