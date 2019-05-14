@@ -256,7 +256,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Issue'
+              type: object
+              properties:
+                title: 
+                  type: string
+                details: 
+                  type: string
+                type: 
+                  type: string
+                Priority: 
+                  type: string
+                Assignee: 
+                  type: string
+                Status: 
+                  type: string
       responses:
         200:
           description: successful operation
