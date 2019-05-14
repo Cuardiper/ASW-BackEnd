@@ -162,16 +162,16 @@ class IssuesController < ApplicationController
           request_parameters = JSON.parse(request.body.read.to_s)
           title = request_parameters["text"]
           details = request_parameters["details"]
-          type = request_parameters["type"]
-          priority = request_parameters["Priority"]
+          type = request_parameters["type"].downcase
+          priority = request_parameters["Priority"].downcase
           assignee = request_parameters["Assignee"]
-          status = request_parameters["Status"]
+          status = request_parameters["Status"].downcase
           
           if (status !="" and status != @issue.status) 
           comment_text +="changed status to " + status + "<br>"
           else
             if not ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed'].include?(status)
-              render json: { meta: {code: 403, error_message: "status must be one of: new, open, on hold, resolved","duplicate", "invalid","wontfix","closed"}}
+              render json: { meta: {code: 403, error_message: "status must be one of: new, open, on hold, resolved,duplicate, invalid,wontfix,closed"}}
             else
               status = @issue.status
             end
