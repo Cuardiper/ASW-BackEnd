@@ -748,6 +748,8 @@ paths:
           description: Invalid ID supplied
           content:
             application/json: {}
+      security:
+        - api_key: []
   '/issues/{IssueId}/comments':
     get:
       tags:
