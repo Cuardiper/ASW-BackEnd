@@ -157,7 +157,7 @@ class IssuesController < ApplicationController
       if(token2)
         @user_aux = authenticate
         if(@user_aux.nil?)
-          render json: { meta: {code: 401, error_message: "Invalid token"}}
+          render json: { error_message: "Invalid token"}, status: 401
         else
           request_parameters = JSON.parse(request.body.read.to_s)
           title = request_parameters["title"]
@@ -168,7 +168,7 @@ class IssuesController < ApplicationController
           status = request_parameters["Status"].downcase
           
           if not ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed'].include?(status)
-            render json: { meta: {code: 403, error_message: "status must be one of: new, open, on hold, resolved,duplicate, invalid,wontfix,closed"}}
+            render json: { error_message: "status must be one of: new, open, on hold, resolved,duplicate, invalid,wontfix,closed"}, status: 403
             return
           else
             if (status !="" and status != @issue.status) 
@@ -185,7 +185,7 @@ class IssuesController < ApplicationController
           end
           
           if not ["bug", "enhancement", "proposal", "task"].include?(type)
-            render json: { meta: {code: 403, error_message: "Type must be one of: bug, enhancement, proposal, task"}}
+            render json: { error_message: "Type must be one of: bug, enhancement, proposal, task"}, status: 403
             return
           else
             if (type != "" and type != @issue.type_issue)
@@ -196,7 +196,7 @@ class IssuesController < ApplicationController
           end
           
           if not ["trivial", "minor", "major", "critical", "blocker"].include?(priority)
-            render json: { meta: {code: 403, error_message: "Priority must be one of: trivial, minor, major, critical, blocker"}}
+            render json: { error_message: "Priority must be one of: trivial, minor, major, critical, blocker"}, status: 403
             return
           else
             if (priority != "" and priority != @issue.priority)
@@ -230,7 +230,7 @@ class IssuesController < ApplicationController
         render json: {
           error: "Missing token in header",
           status: 401
-        },status: 400
+        },status: 401
       end
     
     else
