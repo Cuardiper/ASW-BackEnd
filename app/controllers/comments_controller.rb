@@ -74,18 +74,13 @@ class CommentsController < ApplicationController
           status: 401
         }, status: 400
     end
-  end
     
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_back fallback_location: "/issues", notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment, each_serializer: CommentSerializer }
-      else
-        format.html { render :new }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+
+    if @comment.save
+      render :show, status: :created, location: @comment, each_serializer: CommentSerializer 
+    else
+      render json: @comment.errors, status: :unprocessable_entity
     end
-    
   end
 
   # PATCH/PUT /comments/1
