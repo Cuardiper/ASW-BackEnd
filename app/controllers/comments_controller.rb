@@ -132,11 +132,27 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
-    id_isue = @comment.issue_id.to_s
-    @comment.destroy
-    respond_to do |format|
-      format.html { redirect_back fallback_location: "/issues/" + id_isue, notice: 'Comment was successfully destroyed.' }
-      format.json { render json: {"message": "Comment deleted"}, status: :ok }
+    apiOk = false
+    if(current_user.nil?)
+      token2 = request.headers['token']
+      if(token2)
+        @user_aux = authenticate
+        if(@user_aux.nil?)
+          render json: { error_message: "Invalid token"}, status: 401
+        else
+          apiOk = true
+        end
+      else
+        render json: { error_message: "Missing token"}, status: 401
+      end
+    end
+    if (not current_user.nil?) or (apiOk)
+      id_isue = @comment.issue_id.to_s
+      @comment.destroy
+      respond_to do |format|
+        format.html { redirect_back fallback_location: "/issues/" + id_isue, notice: 'Comment was successfully destroyed.' }
+        format.json { render json: {"message": "Comment deleted"}, status: 204 }
+      end
     end
   end
 
