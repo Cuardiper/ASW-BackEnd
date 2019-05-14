@@ -156,7 +156,6 @@ class IssuesController < ApplicationController
       token2 = request.headers['token']
       if(token2)
         @user_aux = authenticate
-        @idIssue = params[:Issue_id]
         if(@user_aux.nil?)
           render json: { meta: {code: 401, error_message: "Invalid token"}}
         else
@@ -199,9 +198,9 @@ class IssuesController < ApplicationController
             title = @issue.description
           end
           if (comment_text != "")
-            Comment.create(:text => comment_text, :reporter_id => @user_aux.id, :issue_id => @idIssue)
+            Comment.create(:text => comment_text, :reporter_id => @user_aux.id, :issue_id => @issue.id)
           end
-          if @issue.update(title: title, description: details, type_issue: type, priority: priority, creator_id: @user_aux.id, assignee_id: assignee, status: status, issue_id: @idIssue)
+          if @issue.update(title: title, description: details, type_issue: type, priority: priority, creator_id: @user_aux.id, assignee_id: assignee, status: status, issue_id: @issue.id)
               render json: @issue, status: :ok, serializer: IssueSerializer
           else
               render json: @issue.errors, status: 404
