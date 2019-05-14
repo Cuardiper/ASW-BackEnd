@@ -320,7 +320,7 @@ class IssuesController < ApplicationController
         render json: { error_message: "Missing token"}, status: 401
       end
     end
-    if current_user  or apiOk==1
+    if (not current_user.nil?) or (apiOk==1)
       @issue.comments.destroy_all
       @issue.attachments.destroy_all
       @issue.destroy
