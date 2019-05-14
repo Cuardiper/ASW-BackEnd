@@ -307,6 +307,7 @@ class IssuesController < ApplicationController
   # DELETE /issues/1
   # DELETE /issues/1.json
   def destroy
+    apiOk = false
     if(current_user.nil?)
       token2 = request.headers['token']
       if(token2)
@@ -314,13 +315,13 @@ class IssuesController < ApplicationController
         if(@user_aux.nil?)
           render json: { error_message: "Invalid token"}, status: 401
         else
-          apiOk = True
+          apiOk = true
         end
       else
         render json: { error_message: "Missing token"}, status: 401
       end
     end
-    if (not current_user.nil?) or (apiOk==1)
+    if (not current_user.nil?) or (apiOk)
       @issue.comments.destroy_all
       @issue.attachments.destroy_all
       @issue.destroy
