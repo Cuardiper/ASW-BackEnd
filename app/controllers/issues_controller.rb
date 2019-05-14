@@ -167,12 +167,12 @@ class IssuesController < ApplicationController
           assignee = request_parameters["Assignee"]
           status = request_parameters["Status"].downcase
           
-          if (status !="" and status != @issue.status) 
-          comment_text +="changed status to " + status + "<br>"
+          if not ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed'].include?(status)
+            render json: { meta: {code: 403, error_message: "status must be one of: new, open, on hold, resolved,duplicate, invalid,wontfix,closed"}}
+            return
           else
-            if not ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed'].include?(status)
-              render json: { meta: {code: 403, error_message: "status must be one of: new, open, on hold, resolved,duplicate, invalid,wontfix,closed"}}
-              return
+            if (status !="" and status != @issue.status) 
+              comment_text +="changed status to " + status + "<br>"
             else
               status = @issue.status
             end
@@ -184,12 +184,12 @@ class IssuesController < ApplicationController
             title = @issue.title
           end
           
-          if (type != "" and type != @issue.type_issue)
-            comment_text = comment_text + "marked as " + type + "<br>"
+          if not ["bug", "enhancement", "proposal", "task"].include?(type)
+            render json: { meta: {code: 403, error_message: "Type must be one of: bug, enhancement, proposal, task"}}
+            return
           else
-            if not ["bug", "enhancement", "proposal", "task"].include?(type)
-              render json: { meta: {code: 403, error_message: "Type must be one of: bug, enhancement, proposal, task"}}
-              return
+            if (type != "" and type != @issue.type_issue)
+              comment_text = comment_text + "marked as " + type + "<br>"
             else
               type = @issue.type_issue
             end
