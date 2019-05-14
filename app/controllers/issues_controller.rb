@@ -169,24 +169,40 @@ class IssuesController < ApplicationController
           
           if (status !="" and status != @issue.status) 
           comment_text +="changed status to " + status + "<br>"
-          else 
-            status = @issue.status
+          else
+            if not ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed'].include?(status)
+              render json: { meta: {code: 403, error_message: "status must be one of: new, open, on hold, resolved","duplicate", "invalid","wontfix","closed"}}
+            else
+              status = @issue.status
+            end
           end
+          
           if (title != "" and title != @issue.title) 
             comment_text = comment_text + "changed title to " + title + "<br>"
           else 
             title = @issue.title
           end
+          
           if (type != "" and type != @issue.type_issue)
             comment_text = comment_text + "marked as " + type + "<br>"
-          else 
-            type = @issue.type_issue
+          else
+            if not ["bug", "enhancement", "proposal", "task"].include?(type)
+              render json: { meta: {code: 403, error_message: "Type must be one of: bug, enhancement, proposal, task"}}
+            else
+              type = @issue.type_issue
+            end
           end
+          
           if (priority != "" and priority != @issue.priority)
             comment_text = comment_text + "marked as " + priority + "<br>"
-          else 
-            priority = @issue.priority
+          else
+            if not ["trivial", "minor", "major", "critical", "blocker"].include?(priority)
+              render json: { meta: {code: 403, error_message: "Priority must be one of: trivial, minor, major, critical, blocker"}}
+            else
+              priority = @issue.priority
+            end
           end
+          
           if (assignee != 0  and assignee != @issue.assignee_id  )
             comment_text = comment_text + "assigned issue to " + User.find(assignee).name + "<br>"
           else 
