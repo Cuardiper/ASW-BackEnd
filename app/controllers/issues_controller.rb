@@ -201,7 +201,7 @@ class IssuesController < ApplicationController
             Comment.create(:text => comment_text, :reporter_id => @user_aux.id, :issue_id => @issue.id)
           end
           if @issue.update(title: title, description: details, type_issue: type, priority: priority, creator_id: @user_aux.id, assignee_id: assignee, status: status, issue_id: @issue.id)
-              render json: @issue, status: :ok, serializer: IssueSerializer
+              render json: @issue, status: :ok, each_serializer: IssueSerializer
           else
               render json: @issue.errors, status: 404
           end
