@@ -307,15 +307,30 @@ class IssuesController < ApplicationController
   # DELETE /issues/1
   # DELETE /issues/1.json
   def destroy
-    @issue = Issue.find(params[:id])
-    @issue.comments.destroy_all
-    @issue.attachments.destroy_all
-    @issue.destroy
-    respond_to do |format|
-      format.html { redirect_to issues_url, notice: 'Issue was successfully deleted.' }
-      format.json { render json: {message: "success"}, status: :ok }
+    if(current_user.nil?)
+      token2 = request.headers['token']
+      if(token2)
+        @user_aux = authenticate
+        if(@user_aux.nil?)
+          render json: { error_message: "Invalid token"}, status: 401
+        else
+          apiOk = True
+        end
+      else
+        render json: { error_message: "Missing token"}, status: 401
+      end
+    end
+    if current_user  or apiOk==1
+      @issue.comments.destroy_all
+      @issue.attachments.destroy_all
+      @issue.destroy
+      respond_to do |format|
+        format.html { redirect_to issues_url, notice: 'Issue was successfully deleted.' }
+        format.json { render json: {message: "success"}, status: 204 }
+      end
     end
   end
+      
 
   
   def watch
