@@ -172,6 +172,7 @@ class IssuesController < ApplicationController
           else
             if not ['new', 'open','on hold','resolved','duplicate','invalid','wontfix','closed'].include?(status)
               render json: { meta: {code: 403, error_message: "status must be one of: new, open, on hold, resolved,duplicate, invalid,wontfix,closed"}}
+              return
             else
               status = @issue.status
             end
@@ -188,16 +189,18 @@ class IssuesController < ApplicationController
           else
             if not ["bug", "enhancement", "proposal", "task"].include?(type)
               render json: { meta: {code: 403, error_message: "Type must be one of: bug, enhancement, proposal, task"}}
+              return
             else
               type = @issue.type_issue
             end
           end
           
-          if (priority != "" and priority != @issue.priority)
-            comment_text = comment_text + "marked as " + priority + "<br>"
+          if not ["trivial", "minor", "major", "critical", "blocker"].include?(priority)
+            render json: { meta: {code: 403, error_message: "Priority must be one of: trivial, minor, major, critical, blocker"}}
+            return
           else
-            if not ["trivial", "minor", "major", "critical", "blocker"].include?(priority)
-              render json: { meta: {code: 403, error_message: "Priority must be one of: trivial, minor, major, critical, blocker"}}
+            if (priority != "" and priority != @issue.priority)
+              comment_text = comment_text + "marked as " + priority + "<br>"
             else
               priority = @issue.priority
             end
