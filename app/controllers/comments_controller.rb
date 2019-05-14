@@ -58,18 +58,23 @@ class CommentsController < ApplicationController
   
   def postOnIssue
     @idIssue = params[:Issue_id]
-    @user_aux = authenticate
-    if(@user_aux.nil?)
-      respond_to do |format|
-      format.json {render json: { 
-       meta: {code: 401, error_message: "Unauthorized"}
-      }}
+    token2 = request.headers['token']
+    if(token2)
+      @user_aux = authenticate
+      if(@user_aux.nil?)
+        format.json {render json: { meta: {code: 401, error_message: "Unauthorized"}}}
+      else
+        request_parameters = JSON.parse(request.body.read.to_s)
+        text = request_parameters["text"]
+        @comment = Comment.create(text: text, reporter_id: @user_aux.id, issue_id: @idIssue)
       end
     else
-      request_parameters = JSON.parse(request.body.read.to_s)
-      text = request_parameters["text"]
-      @comment = Comment.create(text: text, reporter_id: @user_aux.id, issue_id: @idIssue)
+      render json: {
+          error: "Missing token in header",
+          status: 401
+        }, status: 400
     end
+  end
     
     respond_to do |format|
       if @comment.save
