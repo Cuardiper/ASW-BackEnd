@@ -160,7 +160,7 @@ class IssuesController < ApplicationController
           render json: { meta: {code: 401, error_message: "Invalid token"}}
         else
           request_parameters = JSON.parse(request.body.read.to_s)
-          title = request_parameters["text"]
+          title = request_parameters["title"]
           details = request_parameters["details"]
           type = request_parameters["type"].downcase
           priority = request_parameters["Priority"].downcase
