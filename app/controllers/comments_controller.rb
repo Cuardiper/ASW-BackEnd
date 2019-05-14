@@ -67,19 +67,17 @@ class CommentsController < ApplicationController
         request_parameters = JSON.parse(request.body.read.to_s)
         text = request_parameters["text"]
         @comment = Comment.create(text: text, reporter_id: @user_aux.id, issue_id: @idIssue)
+        if @comment.save
+          render :show, status: :created, location: @comment, each_serializer: CommentSerializer 
+        else
+          render json: @comment.errors, status: :unprocessable_entity
+        end
       end
     else
       render json: {
           error: "Missing token in header",
           status: 401
         }, status: 400
-    end
-    
-
-    if @comment.save
-      render :show, status: :created, location: @comment, each_serializer: CommentSerializer 
-    else
-      render json: @comment.errors, status: :unprocessable_entity
     end
   end
 
