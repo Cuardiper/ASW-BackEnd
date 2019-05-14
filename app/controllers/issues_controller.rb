@@ -195,7 +195,7 @@ class IssuesController < ApplicationController
           if (details != "" and details != @issue.description) 
             comment_text = comment_text + "edited description" + "<br>"
           else 
-            title = @issue.description
+            details = @issue.description
           end
           if (comment_text != "")
             Comment.create(:text => comment_text, :reporter_id => @user_aux.id, :issue_id => @issue.id)
