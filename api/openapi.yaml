@@ -899,12 +899,12 @@ paths:
                 The `id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
               operationId: getUserByID
               parameters: 
-                UserId: '$response.body#/reporter_id'
+                UserId: 'server.url + attachment.location'
         '400':
-          description: Invalid username supplied
+          description: Unauthorized
           content: {}
         '404':
-          description: User not found
+          description: Issue not found
           content: {}
   '/issues/{IssueId}/attachments':
     get:
@@ -927,6 +927,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+          links:
+            url:
+              description: >
+                The url value returned in the response can be used as the url in GET to get that attachment.
+              parameters: 
+                url: '$response.body#/id'
+            issue:
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/id'
         '404':
           description: Issue not found
           content: {}
@@ -948,7 +960,9 @@ paths:
         '204':
           description: attachment deleted
         '404':
-          description: Attachment not found
+          description: Attachment not 
+      security:
+        - api_key: []
 
 components:
   schemas:
