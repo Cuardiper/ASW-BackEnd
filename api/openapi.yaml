@@ -850,6 +850,9 @@ paths:
         '400':
           description: Bad Request
           content: {}
+        '422':
+          description: Issue must exist
+          content: {}
       security:
         - api_key: []
         
