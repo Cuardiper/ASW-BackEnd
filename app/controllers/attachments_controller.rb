@@ -56,12 +56,10 @@ class AttachmentsController < ApplicationController
     end
     
     def findByIssue
-    @attachments = Attachment.all.where(issue_id: params[:Issue_id])
-      respond_to do |format|
-        format.html { @attachments }
-        format.json { render json: @attachments.to_json() }
-      end
+      @attachments = Attachment.all.where(issue_id: params[:Issue_id])
+      render json: @attachments.to_json() 
     end
+    
   end
  
  private
