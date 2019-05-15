@@ -151,12 +151,6 @@ paths:
                 IssueId: '$response.body#/id'
               description: >
                 The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}/comments`.
-        '204':
-          description: No Content
-          content: {}
-        '400':
-          description: Bad Request
-          content: {}  
       security:
         - api_key: []
   '/issues/{IssueId}':
@@ -712,8 +706,8 @@ paths:
               operationId: getIssuesById
               parameters: 
                 IssueId: '$response.body#/issue_id'
-        '400':
-          description: Bad Request
+        '401':
+          description: Unauthorized
           content: {}
         '404':
             description: Not Found
@@ -740,6 +734,10 @@ paths:
             application/json: {}
         '400':
           description: Invalid ID supplied
+          content:
+            application/json: {}
+        '401':
+          description: Unauthorized
           content:
             application/json: {}
       security:
@@ -841,10 +839,10 @@ paths:
               operationId: getIssuesById
               parameters: 
                 IssueId: '$response.body#/issue_id'
-        '400':
-          description: Bad Request
+        '401':
+          description: Unauthorized
           content: {}
-        '422':
+        '400':
           description: Issue must exist
           content: {}
       security:

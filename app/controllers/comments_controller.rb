@@ -68,7 +68,7 @@ class CommentsController < ApplicationController
     if(token2)
       @user_aux = authenticate
       if(@user_aux.nil?)
-        format.json {render json: { meta: {code: 401, error_message: "Unauthorized"}}}
+        render json: { error_message: "Invalid token"}, status: 401
       else
         request_parameters = JSON.parse(request.body.read.to_s)
         text = request_parameters["text"]
@@ -83,7 +83,7 @@ class CommentsController < ApplicationController
       render json: {
           error: "Missing token in header",
           status: 401
-        }, status: 400
+        }, status: 401
     end
   end
 
@@ -109,14 +109,14 @@ class CommentsController < ApplicationController
             render json: {
               error: "Only the reporter can edit the comment",
               status: 401
-            }, status: 400
+            }, status: 401
           end
         end
       else 
         render json: {
           error: "Missing token in header",
           status: 401
-        }, status: 400
+        }, status: 401
       end
     else #no venimos de api
       id_isue = @comment.issue_id.to_s
