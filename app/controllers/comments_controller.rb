@@ -25,10 +25,16 @@ class CommentsController < ApplicationController
   
   # GET /comments/issue/1
   def getByIssue
-    @comments = Comment.all.where(issue_id: params[:Issue_id])
-    respond_to do |format|
-      format.html { @comments }
-      format.json { render json: @comments, status: :ok, each_serializer: CommentSerializer}
+    if Issue.find(params[:Issue_id]).nil? 
+      respond_to do |format|
+        format.json {render json: {meta: {code: 404, error_message: "Issue Not Found"}}, status: :not_found}
+      end
+    else
+      @comments = Comment.all.where(issue_id: params[:Issue_id])
+      respond_to do |format|
+        format.html { @comments }
+        format.json { render json: @comments, status: :ok, each_serializer: CommentSerializer}
+      end
     end
   end
   
