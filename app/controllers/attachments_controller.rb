@@ -6,6 +6,7 @@ class AttachmentsController < ApplicationController
   #Index action, attachments gets listed in the order at which they were created
  def index
   @attachments = Attachment.all
+  render json: @attachments, status: :ok, each_serializer: AttachmentSerializer
  end
  
  def findByIssue

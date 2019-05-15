@@ -3,7 +3,6 @@ class AttachmentSerializer < ActiveModel::Serializer
   
   def _links
     links = {
-      self: { href: "/attachments/#{object.id}" },
       url: { href: "https://calm-scrubland-98205.herokuapp.com/#{object.file.url}"},
       issue: { href: "/issues/#{object.issue_id}"}
     }
