@@ -28,21 +28,39 @@ class AttachmentsController < ApplicationController
  
  #Destroy action for deleting an already uploaded image
   def destroy
-  @attachment = Attachment.find(params[:id])
-    if @attachment.destroy
-      id_isue = @attachment.issue_id.to_s
-      flash[:notice] = "Successfully deleted attachment!"
-      redirect_to "/issues/" + id_isue
+    @attachment = Attachment.find(params[:id])
+    if(current_user.nil?)
+      token2 = request.headers['token']
+      if(token2)
+        @user_aux = authenticate
+        if(@user_aux.nil?)
+          render json: { meta: {code: 401, error_message: "Invalid token"}}
+        else
+          if @attachment.destroy
+            render json: {message: "success"}, status: 204
+          else
+            render json: { meta: {code: 422, error_message: "Unprocessable Entity"}}
+          end
+        end
+      else
+        render json: { error: "Missing token in header",status: 401 },status: 400
+      end
     else
-      flash[:alert] = "Error deleting attachment!"
+      if @attachment.destroy
+        id_isue = @attachment.issue_id.to_s
+        flash[:notice] = "Successfully deleted attachment!"
+        redirect_to "/issues/" + id_isue
+      else
+        flash[:alert] = "Error deleting attachment!"
+      end
     end
-  end
-  
-  def findByIssue
-  @attachments = Attachment.all.where(issue_id: params[:Issue_id])
-    respond_to do |format|
-      format.html { @attachments }
-      format.json { render json: @attachments.to_json() }
+    
+    def findByIssue
+    @attachments = Attachment.all.where(issue_id: params[:Issue_id])
+      respond_to do |format|
+        format.html { @attachments }
+        format.json { render json: @attachments.to_json() }
+      end
     end
   end
  
