@@ -29,15 +29,6 @@ Rails.application.routes.draw do
   get '/issues/:Issue_id/comments' => "comments#getByIssue", as: :getByIssue
   post '/issues/:Issue_id/comments' => "comments#postOnIssue", as: :postOnIssue
   get '/issues/:Issue_id/attachments' => "attachments#findByIssue", as: :findByIssue
-  
-  namespace :api, defaults: { format: "json" } do
-    namespace :v1 do
-      resources :issues
-      resources :users
-      resources :comments
-      resources :attachments
-    end
-  end
 
 end
 
