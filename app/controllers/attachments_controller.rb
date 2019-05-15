@@ -7,6 +7,11 @@ class AttachmentsController < ApplicationController
  def index
   @attachments = Attachment.all
  end
+ 
+ def findByIssue
+  @attachments = Attachment.all.where(issue_id: params[:Issue_id])
+  render json: @attachments.to_json() 
+ end
 
  #New action for creating a new attachment
  def new
@@ -54,12 +59,6 @@ class AttachmentsController < ApplicationController
         flash[:alert] = "Error deleting attachment!"
       end
     end
-    
-    def findByIssue
-      @attachments = Attachment.all.where(issue_id: params[:Issue_id])
-      render json: @attachments.to_json() 
-    end
-    
   end
  
  private
