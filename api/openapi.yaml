@@ -227,16 +227,10 @@ paths:
       responses:
         '204':
           description:  Issue deleted
-          content:
-            application/json: {}
-        '400':
-          description: Invalid ID supplied
-          content:
-            application/json: {}
         '404':
           description: Issue not found
-          content:
-            application/json: {}
+        '401':
+          description: Unauthorized
       security:
         - api_key: []
     put:
@@ -912,7 +906,7 @@ paths:
         '404':
           description: User not found
           content: {}
-  '/attachments/issue/{IssueId}':
+  '/issues/{IssueId}/attachments':
     get:
       tags:
         - Attachment
@@ -936,6 +930,25 @@ paths:
         '404':
           description: Issue not found
           content: {}
+  '/attachments/{AttachmentId}':
+    delete:
+      tags:
+        - Attachment
+      summary: Delete attachment by issue_id
+      operationId: DeleteAttachmentByIssue
+      parameters:
+        - name: AttachmentId
+          in: path
+          description: ID of Attachment to destroy 
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: attachment deleted
+        '404':
+          description: Attachment not found
 
 components:
   schemas:

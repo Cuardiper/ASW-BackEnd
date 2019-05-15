@@ -27,7 +27,8 @@ class IssueSerializer < ActiveModel::Serializer
         self: { href: "/issues/#{object.id}" },
         creator: { href: "/users/#{object.creator_id}"},
         assignee: { href: "/users/#{object.assignee_id}"},
-        comments: { href: "/issues/#{object.id}/comments"}
+        comments: { href: "/issues/#{object.id}/comments"},
+        attachments: { href: "/issues/#{object.id}/attachments"}
       }
     else
       links = {

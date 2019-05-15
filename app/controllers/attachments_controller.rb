@@ -10,7 +10,8 @@ class AttachmentsController < ApplicationController
  
  def findByIssue
   @attachments = Attachment.all.where(issue_id: params[:Issue_id])
-  render json: @attachments.to_json() 
+  #render json: @attachments.to_json() 
+  render json: @attachments, status: :ok, each_serializer: AttachmentSerializer
  end
 
  #New action for creating a new attachment
