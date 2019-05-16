@@ -5,16 +5,8 @@ info:
     This is a swagger file to test an Issue Tracker created with ruby on rails
     by Alejandra Volkova, Daniel Esquina, Alvaro Luque and Arthur Bernal in ASW
     course in FIB
-  termsOfService: 'http://swagger.io/terms/'
-  contact:
-    email: apiteam@swagger.io
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.0
-externalDocs:
-  description: Find out more about Swagger
-  url: 'http://swagger.io'
+
 servers:
   - url: 'https://calm-scrubland-98205.herokuapp.com'
 tags:
@@ -153,6 +145,47 @@ paths:
                 The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}/comments`.
       security:
         - api_key: []
+    post:
+      tags:
+        - Issue
+      summary: Post a issue
+      operationId: PostIssue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text: 
+                  type: string
+                details:
+                  type: string
+                type:
+                  type: string
+                Priority:
+                  type: string
+                Assignee:
+                  type: integer
+                  format: int64
+        required: true
+      responses:
+        '201':
+          description: Issue Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue'
+        '401':
+          description: Unauthorized
+          content: {}
+        '400':
+          description: assignee must exist
+          content: {}
+      security:
+        - api_key: []
+    
   '/issues/{IssueId}':
     get:
       tags:
