@@ -124,7 +124,7 @@ class IssuesController < ApplicationController
             render json: { meta: {code: 401, error_message: "Invalid Assignee"}}
           else
             if @issue.save
-              render :show, status: :created, location: @issue, each_serializer: IssueSerializer
+              render :show, status: :created, location: @issue, serializer: IssueSerializer
             else
               render json: @issue.errors, status: :unprocessable_entity
             end
