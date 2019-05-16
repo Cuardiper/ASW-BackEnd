@@ -38,7 +38,8 @@ ActiveRecord::Schema.define(version: 20190411085236) do
     t.string "priority"
     t.string "status"
     t.integer "votes"
-    t.integer "creator_id" 
+    t.integer "creator_id"
+    t.integer "assignee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

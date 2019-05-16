@@ -100,11 +100,14 @@ class IssuesController < ApplicationController
           type = request_parameters["type"]
           priority = request_parameters["Priority"]
           assignee = request_parameters["Assignee"]
-          if type == ""
-            type = "bug"
+          
+          if not ["bug", "enhancement", "proposal", "task"].include?(type)
+            render json: { error_message: "Type must be one of: bug, enhancement, proposal, task"}, status: 403
+          return
           end
-          if priority == ""
-            priority = "trivial"
+          if not ["trivial", "minor", "major", "critical", "blocker"].include?(priority)
+            render json: { error_message: "Priority must be one of: trivial, minor, major, critical, blocker"}, status: 403
+          return
           end
           if assignee == 0
              @issue = Issue.create(title: title, description: details, type_issue: type, priority: priority, creator_id: @user_aux.id, status:"new")
