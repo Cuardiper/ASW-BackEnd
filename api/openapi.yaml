@@ -1063,7 +1063,7 @@ components:
             - closed
             - open
             - resolved
-            - duplicated
+            - duplicate
             - on hold
             - invalid
             - wontfix
