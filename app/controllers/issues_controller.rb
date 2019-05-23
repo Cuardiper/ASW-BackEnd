@@ -283,7 +283,7 @@ class IssuesController < ApplicationController
     else
       if (issue_params[:status].present? and (issue_params[:status] == "new" or 
         issue_params[:status] == "closed" or issue_params[:status] == "open" or 
-        issue_params[:status] == "resolved" or issue_params[:status] == "duplicated" or 
+        issue_params[:status] == "resolved" or issue_params[:status] == "duplicate" or 
         issue_params[:status] == "on hold" or issue_params[:status] == "invalid" or issue_params[:status] == "wontfix"))
           comment_text = ""
           if (issue_params[:status].present? and issue_params[:status] != @issue.status) 
