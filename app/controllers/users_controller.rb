@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   include SessionsHelper
   #before_action :logged_in_user
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token
 
   # GET /users
   # GET /users.json
