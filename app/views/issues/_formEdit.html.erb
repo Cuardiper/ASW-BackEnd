@@ -27,7 +27,7 @@
   <div>
     <a href="/users/<%= issue.creator_id %>">
       <%= image_tag( User.all.find(issue.creator_id).foto, width: 25, height: 25, class: 'img-circle') %>
-      <span><%= User.all.find(issue.creator_id).name %></span>
+      <span><%= User.all.find(issue.creator_id).oauth_token %></span>
     </a>
   </div>
   
