@@ -6,10 +6,15 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
-    respond_to do |format|
-      format.html
-      format.json {render json: @users, status: :ok, each_serializer: UserSerializer}
+    
+    if param[:token].present?
+      @users = User.where(oauth_token: [params[:token]])
+    else
+      @users = User.all
+      respond_to do |format|
+        format.html
+        format.json {render json: @users, status: :ok, each_serializer: UserSerializer}
+      end
     end
   end
 
