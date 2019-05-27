@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     
-    if param[:token].present?
+    if params[:token].present?
       @users = User.where(oauth_token: [params[:token]])
     else
       @users = User.all
