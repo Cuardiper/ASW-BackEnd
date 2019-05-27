@@ -177,11 +177,39 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Issue'
+          links:
+            self:
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}`.
+              operationId: getIssuesById
+              parameters: 
+                IssueId: '$response.body#/id'  
+            creator:
+              description: >
+                The `creator_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/creator_id'
+            assignee:
+              operationId: getUserByID
+              parameters: 
+                UserId: '$response.body#/assignee_id'
+              description: >
+                The `assignee_id` value returned in the response can be used as the `UserId` parameter in `GET /users/{UserId}`.
+            comments:
+              operationId: getCommentByIssueId
+              parameters: 
+                IssueId: '$response.body#/id'
+              description: >
+                The `id` value returned in the response can be used as the `IssueId` parameter in `GET /issues/{IssueId}/comments`.
         '401':
           description: Unauthorized
           content: {}
         '400':
           description: assignee must exist
+          content: {}
+        '403':
+          description: Forbidden
           content: {}
       security:
         - api_key: []
