@@ -12,7 +12,7 @@ class User < ApplicationRecord
       user.name = auth.info.name
       user.email = auth.info.email
       user.foto = auth.info.image
-      user.oauth_token = auth.credentials.token
+      user.oauth_token = auth.uid
       user.oauth_expires_at = Time.at(auth.credentials.expires_at)
       user.save!
     end
