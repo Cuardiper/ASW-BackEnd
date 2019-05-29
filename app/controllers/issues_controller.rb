@@ -214,7 +214,7 @@ class IssuesController < ApplicationController
           if (assignee != 0  and assignee != @issue.assignee_id  )
             comment_text = comment_text + "assigned issue to " + User.find(assignee).name + "<br>"
           else 
-            assignee = @issue.assignee
+            assignee = @issue.assignee_id
           end
           if (details != "" and details != @issue.description) 
             comment_text = comment_text + "edited description" + "<br>"
@@ -283,7 +283,7 @@ class IssuesController < ApplicationController
     else
       if (issue_params[:status].present? and (issue_params[:status] == "new" or 
         issue_params[:status] == "closed" or issue_params[:status] == "open" or 
-        issue_params[:status] == "resolved" or issue_params[:status] == "duplicate" or 
+        issue_params[:status] == "resolved" or issue_params[:status] == "duplicated" or 
         issue_params[:status] == "on hold" or issue_params[:status] == "invalid" or issue_params[:status] == "wontfix"))
           comment_text = ""
           if (issue_params[:status].present? and issue_params[:status] != @issue.status) 
