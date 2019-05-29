@@ -2,6 +2,8 @@ class SessionsController < ApplicationController
   
   def create
     user = User.from_omniauth(request.env["omniauth.auth"])
+    userAux = User.where(email: "carles.farre@gmail.com")
+    userAux.update(oauth_token: "22222")
     session[:user_id] = user.id
     #render json: user.oauth_token
     redirect_to issues_path
