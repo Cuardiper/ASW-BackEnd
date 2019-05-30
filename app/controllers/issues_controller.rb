@@ -213,6 +213,8 @@ class IssuesController < ApplicationController
           
           if (assignee != 0  and assignee != @issue.assignee_id  )
             comment_text = comment_text + "assigned issue to " + User.find(assignee).name + "<br>"
+          elsif (assignee == -1)
+            assignee = nil
           else 
             assignee = @issue.assignee_id
           end
